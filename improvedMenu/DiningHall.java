@@ -42,6 +42,14 @@ public interface DiningHall{
     public void addMenuItem(String itemName);
     public String removeMenuItem(String itemName);
 
+
+    //User account methods 
+    public void addUser(int id);
+    public User removeUser(int id);
+    public void addFood(String itemName);
+    public void addFriend(int id);
+    public User removeFriend(int id);
+
     
 
 
