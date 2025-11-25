@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.time.*;
 
+//TODO delete after implementation
 public interface DiningHall{
 
     //final variables for days of the week
