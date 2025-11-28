@@ -79,20 +79,19 @@ public class SimulationEngine {
         // Breakfast: 7:30–10:00
         if (hour == 7 || hour == 8) return 5;   // early breakfast
         if (hour == 9) return 4;
-        if (hour == 10) return 1;               // tapering
+        if (hour == 10) return 1;               //less and less people
 
         // Lunch: 11:00–13:30 (approximate with 11–13)
         if (hour == 11 || hour == 12) return 25; // big lunch rush
-        if (hour == 13) return 10;               // tapering into continuous
+        if (hour == 13) return 10;             
 
         // Continuous Service: 13:30–16:30 (approx 14–16)
         if (hour >= 14 && hour <= 16) return 2;  // light trickle
 
         // Dinner: 17:00–19:30
         if (hour == 17 || hour == 18) return 18; // dinner rush
-        if (hour == 19) return 10;               // tapering
+        if (hour == 19) return 10;       
 
-        // Outside those, but still within open hours
         return 0;
     }
 

@@ -47,7 +47,7 @@ public class DiningHall {
     }
 
 
-    // Count how many people are inside at a specific time
+    // Count how many people are inside at a specific time, this logic does not make any sense yet
     public int getOccupancy(int day, int hour, int minute) {
         ArrayList<ScanEvent> list = dayToEvents.get(day);
         if (list == null) return 0;
