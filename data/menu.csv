@@ -1,0 +1,71 @@
+day,meal,item
+1,breakfast,Pancakes
+1,breakfast,Scrambled Eggs
+1,breakfast,Sausage Links
+1,breakfast,Hash Browns
+1,lunch,Pepperoni Pizza
+1,lunch,Chicken Caesar Salad
+1,lunch,Tomato Soup
+1,dinner,Beef Stir Fry
+1,dinner,Fried Rice
+1,dinner,Steamed Broccoli
+
+2,breakfast,French Toast
+2,breakfast,Oatmeal
+2,breakfast,Bacon
+2,lunch,Grilled Cheese
+2,lunch,Turkey Sandwich
+2,lunch,Fries
+2,dinner,Spaghetti
+2,dinner,Garlic Bread
+2,dinner,Green Beans
+
+3,breakfast,Bagels
+3,breakfast,Hard Boiled Eggs
+3,breakfast,Breakfast Potatoes
+3,lunch,Chicken Tacos
+3,lunch,Rice Bowl
+3,lunch,Black Beans
+3,dinner,BBQ Chicken
+3,dinner,Mac and Cheese
+3,dinner,Cornbread
+
+4,breakfast,Waffles
+4,breakfast,Yogurt Parfait
+4,breakfast,Turkey Sausage
+4,lunch,Hamburgers
+4,lunch,Veggie Burgers
+4,lunch,Potato Wedges
+4,dinner,Curry Chicken
+4,dinner,Basmati Rice
+4,dinner,Naan Bread
+
+5,breakfast,Smoothie Bar
+5,breakfast,Egg Sandwiches
+5,breakfast,Fresh Fruit
+5,lunch,Burrito Bar
+5,lunch,Chicken Quesadilla
+5,lunch,Guacamole
+5,dinner,Salmon
+5,dinner,Roasted Potatoes
+5,dinner,Asparagus
+
+6,breakfast,Croissants
+6,breakfast,Porridge
+6,breakfast,Greek Yogurt
+6,lunch,Sushi Rolls
+6,lunch,Edamame
+6,lunch,Miso Soup
+6,dinner,Meatloaf
+6,dinner,Mashed Potatoes
+6,dinner,Carrots
+
+7,breakfast,Avocado Toast
+7,breakfast,Egg Whites
+7,breakfast,Blueberry Muffins
+7,lunch,Pad Thai
+7,lunch,Spring Rolls
+7,lunch,Tofu Stir Fry
+7,dinner,Cheeseburgers
+7,dinner,Tater Tots
+7,dinner,Mixed Vegetables
