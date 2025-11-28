@@ -7,23 +7,12 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner in = new Scanner(System.in);
-
         SystemManager system = new SystemManager();
 
-        // Load users and scan data
-        system.generateUsers(100);  // 100 fake users
-        system.loadScanData("data/generated_scans.csv"); // make sure this path is correct!
+        // Load scan dataset
+        system.loadScanData("data/generated_scans.csv");
 
-        System.out.println("Welcome to the Improved 5C Menu Simulator!");
-        System.out.print("Enter your name: ");
-
-        String name = in.nextLine().trim();
-        User current = system.findUserByName(name);
-
-        if (current == null) {
-            System.out.println("Name not found. Creating new user profile...");
-            current = new User(system.getUserCount(), name);  // adding a helper in User or SystemManager is optional
-        }
+        System.out.println("Welcome to the 5C Wait Time Estimator!");
 
         System.out.print("Enter day of week (1–7): ");
         int day = in.nextInt();
@@ -34,30 +23,11 @@ public class Main {
         System.out.print("Enter minute (0,10,20,30,40,50): ");
         int minute = in.nextInt();
 
-        System.out.println("\nResults");
-
-        // WAIT TIME
+        int occupancy = system.getOccupancy(day, hour, minute);
         int wait = system.getWaitTime(day, hour, minute);
+
+        System.out.println("\n--- Results ---");
+        System.out.println("Estimated occupancy: " + occupancy);
         System.out.println("Estimated wait time: " + wait + " minutes");
-
-        // FRIENDS
-        System.out.println("\nFriends currently inside:");
-        ArrayList<User> friendsInside = system.getFriendsInside(current, day, hour, minute);
-
-        if (friendsInside.isEmpty()) {
-            System.out.println("None of your friends are inside right now.");
-        } else {
-            for (User f : friendsInside) {
-                System.out.println("- " + f.getName());
-            }
-        }
-
-        // FAVORITE FOODS
-        System.out.println("\nYour favorite foods today:");
-        for (String food : system.getFavoriteFoods(current)) {
-            System.out.println("- " + food);
-        }
-
-        System.out.println("\nThank you for using the Improved 5C Menu Simulator!");
     }
 }
