@@ -12,7 +12,7 @@ public class Main {
 
         // Load users and scan data
         system.generateUsers(100);  // 100 fake users
-        system.loadScanData("scans.csv"); // make sure this path is correct!
+        system.loadScanData("data/generated_scans.csv"); // make sure this path is correct!
 
         System.out.println("Welcome to the Improved 5C Menu Simulator!");
         System.out.print("Enter your name: ");
@@ -34,7 +34,7 @@ public class Main {
         System.out.print("Enter minute (0,10,20,30,40,50): ");
         int minute = in.nextInt();
 
-        System.out.println("\n--- Results ---");
+        System.out.println("\nResults");
 
         // WAIT TIME
         int wait = system.getWaitTime(day, hour, minute);

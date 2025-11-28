@@ -17,9 +17,7 @@ public class SystemManager {
         diningHall = new DiningHall();
     }
 
-    // ---------------------------------------------
     // USER MANAGEMENT
-    // ---------------------------------------------
     public void generateUsers(int n) {
         for (int i = 0; i < n; i++) {
             User u = new User(i, "User" + i);
@@ -67,24 +65,18 @@ public class SystemManager {
         return users.size();
     }
 
-    // ---------------------------------------------
     // DATA LOADING
-    // ---------------------------------------------
     public void loadScanData(String filename) {
         diningHall.loadData(filename);
     }
 
-    // ---------------------------------------------
     // WAIT TIME CALCULATION
-    // ---------------------------------------------
     public int getWaitTime(int day, int hour, int minute) {
         int occupancy = diningHall.getOccupancy(day, hour, minute);
         return diningHall.getWaitTime(occupancy);
     }
 
-    // ---------------------------------------------
     // FRIENDS INSIDE SIMULATION
-    // ---------------------------------------------
     public ArrayList<User> getFriendsInside(User u, int day, int hour, int minute) {
         ArrayList<User> inside = new ArrayList<>();
         ArrayList<Integer> fList = friends.get(u.getId());
@@ -118,9 +110,7 @@ public class SystemManager {
         return hour * 6 + (minute / 10);
     }
 
-    // ---------------------------------------------
     // FAVORITE FOODS
-    // ---------------------------------------------
     public ArrayList<String> getFavoriteFoods(User u) {
         return favorites.get(u.getId());
     }
