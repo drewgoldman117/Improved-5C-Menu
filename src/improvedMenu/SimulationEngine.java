@@ -10,6 +10,8 @@ import java.util.*;
 
 public class SimulationEngine {
 
+    //TODO:change to public if we need to reference in other classes
+
     //static variables to reference days of week
     private static final int MON = 1;
     private static final int TUES = 2;
@@ -52,36 +54,97 @@ public class SimulationEngine {
     //frary max capacity (per pomona website)
     private static final int FRARYMAX = 325;
 
+    //student population of pomona (per pomona website)
+    private static final int STUDENTPOP = 1766;
+
     private ArrayList<Integer> allUsers; //arraylist of in use ids 
     private Random rand; //random object
-    private Map<Integer, ArrayList<ScanEvent>> dayToScans; //keeps track of scans per day (final variable day #, scan event)
+    private Map<Integer, ArrayList<ScanEvent>> scansPerDay; //keeps track of scans per day (final variable day #, scan event)
 
     public SimulationEngine() {
         this.allUsers = new ArrayList<>();
         this.rand = new Random();
-        this.dayToScans = new HashMap<>();
+        this.scansPerDay = new HashMap<>();
     }
 
     //Generates a week worth of scan data for each day and meal period, writes to a CSV for use
     public void generateData() {
         //iterates through all days
-        for (int i = MON; i <= SUN; i++){
+        for (int d = MON; d <= SUN; d++){
+
+            //to store day's scans
+            ArrayList<ScanEvent> dayScan = new ArrayList<>();
+            ArrayList<Integer> mealPeriodIds = new ArrayList<>();
 
             //iterates through times of operation (in 10 minute increments)
-            for (int t = OPEN1; t <= CLOSE3; t = (t + 10) % 60){
-                if (inOperatingHours(t) == -1){
+            for (int t = OPEN1; t <= CLOSE3; t += 10){
+                if (mealPeriod(t) == -1){
+                    mealPeriodIds = new ArrayList<>(); //resets mealperiodids as it is a new meal period
                     t += 20; //adds 20 to t, plus the base 10 to increment by a 30 minute interval
                     continue;
                 }
 
+                int meal = mealPeriod(t);
+
                 //helper to calculate # scans per 10 minute block
+                int amount = generateScanAmount(t, meal);
+
+                System.out.println("Amount of scans for time " + t + " is " + amount);
+
 
                 //helper to add the scans to the map
-
-
+                addScans(dayScan, mealPeriodIds, amount, t, d);
             }
 
+            System.out.println("Day " + d + " completed\n\n");
         }
+
+        saveToCSV("./data/generated_scans.csv");
+    }
+
+    //generates a random ID number for a particular scan, writes the ID and scan to the CSV
+    /**
+     * @param amount integer that specifies the amount of scans to be created
+     * @param t the start time (minute) of the 10 minute period
+     * @param d the integer day
+     */
+    private void addScans(ArrayList<ScanEvent> dayScan, ArrayList<Integer> mealPeriodScannedIds, int amount, int t, int d){
+
+        for (int i = 0; i < amount; i++){
+
+            //generating random id section
+            int id = rand.nextInt(STUDENTPOP + 1) + 1; //random id between 1 and student population max
+            
+            while (mealPeriodScannedIds.contains(id)){
+                //generates until it is a unique id
+                id = rand.nextInt(STUDENTPOP + 1) + 1;
+            }
+        
+            mealPeriodScannedIds.add(id); //adds user to known user base
+
+
+            //generating random time section
+
+            int time = rand.nextInt(9) + t; //generates a random time between current time and 9 minutes from that time
+
+            //the hour is calculated by trunkating the minutes to hours, then adding 7 as the hour offset (opens at 0730)
+            int hour = (time / 60) + 7;
+
+            //the minute is calculated by taking the remaining minutes, offseting by 30 and adding remainer to hours
+            int min = (time % 60) + 30;
+
+            if (min >= 60){
+                hour++;
+                min -= 60;
+            }
+
+
+            dayScan.add(new ScanEvent(d, hour, min, id));
+        }
+
+        //links the created ids and the created scans and places them in the map for the given day
+        scansPerDay.put(d, dayScan);
+        System.out.println(amount + " scans added to map");
     }
 
     //calculates a random number of scans based on the time
@@ -89,16 +152,15 @@ public class SimulationEngine {
      * @param t integer time in 24hr
      * @param meal integer specifying the meal period (see class constants)
      */
-    private void int generateScanAmount(int t, int meal){
-        int flowRate;
-        int offset;
-        int amount;
+    private int generateScanAmount(int t, int meal){
+        int flowRate = 0;
+        int offset = 0;
         //calculate base flow rate and determine range
         switch (meal){
 
             //we assume breakfast (meal 1) will not fill the dining hall, thus max capacity of 250 instead of 325
             case MEAL1: {
-                flowRate = (CLOSE1 - OPEN1)/250;
+                flowRate = 250/(CLOSE1 - OPEN1);
 
                 //if within the first 30 minutes of a meal period, set offset to NOTBUSY
                 if (t <= OPEN1 + 30){
@@ -113,11 +175,12 @@ public class SimulationEngine {
                     offset = VBUSY;
                 }
 
+                break;
 
             }
 
             case MEAL2: {
-                flowRate = (CLOSE2 - OPEN2)/FRARYMAX;
+                flowRate = FRARYMAX/(CLOSE2 - OPEN2);
 
                 //if within the first 30 minutes of a meal period, set offset to NOTBUSY
                 if (t <= OPEN2 + 30){
@@ -131,11 +194,11 @@ public class SimulationEngine {
                 } else {
                     offset = VBUSY;
                 }
-
+                break;
             }
 
             case MEAL3: {
-                flowRate = (CLOSE3 - OPEN3)/FRARYMAX;
+                flowRate = FRARYMAX/(CLOSE3 - OPEN3);
 
                 //if within the first 30 minutes of a meal period, set offset to NOTBUSY
                 if (t <= OPEN3 + 30){
@@ -149,15 +212,26 @@ public class SimulationEngine {
                 } else {
                     offset = VBUSY;
                 }
-
+                break;
             }
-
-
-            //TODO: randomize with the offset!!!! see notes
-
         }
 
+        offset = rand.nextInt(offset+1); //selects random within the offset
 
+        if (rand.nextBoolean()){
+            //randomly add or subtracts from base flow
+            int amount = flowRate + (offset * -1);
+
+            //if the amount is negative, defaults to flowrate
+            if (amount < 0){
+                return flowRate;
+            }
+
+            //otherwise return altered amount
+            return amount;
+        }
+
+        return flowRate + offset;
     }
 
     //checks if time is in operating hours
@@ -165,7 +239,7 @@ public class SimulationEngine {
      * @param t int time input in 24hr time HH:MM
      * @return int that specifies the meal period
      */
-    private int inOperatingHours(int time){
+    private int mealPeriod(int time){
         //checks if time lies within an operation time
 
         //in between period 1 and 2
@@ -186,75 +260,9 @@ public class SimulationEngine {
         return -1;
     }
 
-    // Simulate a full day broken into 10-minute intervals
-    public void simulateDay(int day) {
-        ArrayList<ScanEvent> events = new ArrayList<>();
-
-        // 24 hours * 6 blocks per hour = 144 blocks
-        for (int block = 0; block < 144; block++) {
-            events.addAll(simulateInterval(day, block));
-        }
-
-        dayToScans.put(day, events);
-    }
-
-    // Simulate one 10-minute interval
-    private ArrayList<ScanEvent> simulateInterval(int day, int block) {
-        ArrayList<ScanEvent> intervalEvents = new ArrayList<>();
-
-        int hour = block / 6;            // 0–23
-        int minute = (block % 6) * 10;   // 0,10,20,30,40,50
-
-        // Base open hours: 7:30 AM – 7:30 PM
-        boolean isOpen =
-            (hour > 7 && hour < 19) ||          
-            (hour == 7 && minute >= 30) ||      
-            (hour == 19 && minute <= 30);
-
-        // CLOSED WINDOW #1: 10:00–11:00
-        if (hour == 10) {
-            isOpen = false;
-        }
-
-        // CLOSED WINDOW #2: 16:30–17:00
-        if (hour == 16 && minute >= 30) {
-            isOpen = false;
-        }
-
-        if (!isOpen) {
-            // dining hall is closed -> no scans
-            return intervalEvents;
-        }
-
-        int base = getBaseRate(hour);
-        int count = rand.nextInt(5);  
-        
-        for (int i = 0; i < count; i++) {
-            int user = allUsers.get(rand.nextInt(allUsers.size()));
-            intervalEvents.add(new ScanEvent(day, hour, minute, user));
-        }
-
-        return intervalEvents;
-    }
-
-    // Approximate meal-based base rates using only the HOUR
-    private int getBaseRate(int hour) {
-        // Breakfast: 7:30–10:00
-                   //less and less people
-
-        // Lunch: 11:00–13:30 (approximate with 11–13)
-           
-        // Continuous Service: 13:30–16:30 (approx 14–16)
-    
-
-        // Dinner: 17:00–19:30
-         
-        return 5;
-    }
-
     // Get all simulated data (if you want to use it directly in memory)
     public Map<Integer, ArrayList<ScanEvent>> getAllScanData() {
-        return dayToScans;
+        return scansPerDay;
     }
 
     // Save ALL simulated days to a CSV
@@ -263,8 +271,8 @@ public class SimulationEngine {
             FileWriter writer = new FileWriter(filename);
             writer.write("day,hour,minute,userId\n");
 
-            for (int day : dayToScans.keySet()) {
-                for (ScanEvent e : dayToScans.get(day)) {
+            for (int day : scansPerDay.keySet()) {
+                for (ScanEvent e : scansPerDay.get(day)) {
                     writer.write(e.day + "," + e.hour + "," + e.minute + "," + e.userId + "\n");
                 }
             }
@@ -275,5 +283,11 @@ public class SimulationEngine {
         } catch (Exception e) {
             System.out.println("Error saving CSV: " + e.getMessage());
         }
+    }
+
+    public static void main(String[] args) {
+        SimulationEngine se = new SimulationEngine();
+
+        se.generateData();
     }
 }

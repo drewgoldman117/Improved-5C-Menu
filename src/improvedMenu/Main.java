@@ -10,7 +10,7 @@ public class Main {
         SystemManager system = new SystemManager();
 
         // Load scan dataset
-        system.loadScanData("data/generated_scans.csv");
+        system.loadScanData("./data/generated_scans.csv");
 
         System.out.println("Welcome to the 5C Wait Time Estimator!");
 
