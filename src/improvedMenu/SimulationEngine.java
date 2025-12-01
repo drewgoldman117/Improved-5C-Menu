@@ -1,5 +1,5 @@
 /**
- * @author Gavin Honey
+ * @author Gavin Honey TODO: ADD AUTHORS
  *
  */
 //times must be inputted as minutes TODO: make error catching
@@ -123,7 +123,7 @@ public class SimulationEngine {
 
             //generating random time section
 
-            int time = rand.nextInt(9) + t; //generates a random time between current time and 9 minutes from that time
+            int time = rand.nextInt(10) + t; //generates a random time between current time and 9 minutes from that time
 
             //the hour is calculated by trunkating the minutes to hours, then adding 7 as the hour offset (opens at 0730)
             int hour = (time / 60) + 7;
