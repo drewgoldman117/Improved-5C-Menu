@@ -87,14 +87,15 @@ public class SimulationEngine {
                 //helper to calculate # scans per 10 minute block
                 int amount = generateScanAmount(t, meal);
 
-                System.out.println("Amount of scans for time " + t + " is " + amount);
+                //for testing
+                //System.out.println("Amount of scans for time " + t + " is " + amount);
 
 
                 //helper to add the scans to the map
                 addScans(dayScan, mealPeriodIds, amount, t, d);
             }
 
-            System.out.println("Day " + d + " completed\n\n");
+            System.out.println("Day " + d + " completed\n");
         }
 
         saveToCSV("./data/generated_scans.csv");
@@ -141,7 +142,9 @@ public class SimulationEngine {
 
         //links the created ids and the created scans and places them in the map for the given day
         scansPerDay.put(d, dayScan);
-        System.out.println(amount + " scans added to map\n");
+
+        //for testing
+        //System.out.println(amount + " scans added to map\n");
     }
 
     //calculates a random number of scans based on the time
@@ -155,9 +158,10 @@ public class SimulationEngine {
         //calculate base flow rate and determine range
         switch (meal){
 
-            //we assume breakfast (meal 1) will not fill the dining hall, thus max capacity of 250 instead of 325
+            //From speaking to our peers, we estimate around 1/5 of people do not frequent breakfast, thus we will only take 4/5 of the flow rate
+            //TODO: ask if we can do this
             case MEAL1: {
-                flowRate = 250/(CLOSE1 - OPEN1);
+                flowRate = (FRARYMAX/(CLOSE1 - OPEN1)) * 4/5;
 
                 //if within the first 30 minutes of a meal period, set offset to NOTBUSY
                 if (t <= OPEN1 + 30){
