@@ -1,8 +1,8 @@
 /**
  * @author Gavin Honey
- * @author TODO: (add more names!!!) 
+ *
  */
-//times must be inputted as valid 24hr times TODO: make error catching
+//times must be inputted as minutes TODO: make error catching
 package improvedMenu;
 
 import java.io.FileWriter;
@@ -13,18 +13,18 @@ public class SimulationEngine {
     //TODO:change to public if we need to reference in other classes
 
     //static variables to reference days of week
-    private static final int MON = 1;
-    private static final int TUES = 2;
-    private static final int WED = 3;
-    private static final int TR = 4;
-    private static final int FRI = 5;
-    private static final int SAT = 6;
-    private static final int SUN = 7;
+    protected static final int MON = 1;
+    protected static final int TUES = 2;
+    protected static final int WED = 3;
+    protected static final int TR = 4;
+    protected static final int FRI = 5;
+    protected static final int SAT = 6;
+    protected static final int SUN = 7;
 
     //meal period integers
-    private static final int MEAL1 = 1;
-    private static final int MEAL2 = 2;
-    private static final int MEAL3 = 3;
+    protected static final int MEAL1 = 1;
+    protected static final int MEAL2 = 2;
+    protected static final int MEAL3 = 3;
 
     //opening time for meal period 1 in minutes (07:30)
     private static final int OPEN1 = 0;
@@ -52,17 +52,15 @@ public class SimulationEngine {
 
 
     //frary max capacity (per pomona website)
-    private static final int FRARYMAX = 325;
+    protected static final int FRARYMAX = 325;
 
     //student population of pomona (per pomona website)
-    private static final int STUDENTPOP = 1766;
+    protected static final int STUDENTPOP = 1766;
 
-    private ArrayList<Integer> allUsers; //arraylist of in use ids 
     private Random rand; //random object
     private Map<Integer, ArrayList<ScanEvent>> scansPerDay; //keeps track of scans per day (final variable day #, scan event)
 
     public SimulationEngine() {
-        this.allUsers = new ArrayList<>();
         this.rand = new Random();
         this.scansPerDay = new HashMap<>();
     }
@@ -109,7 +107,6 @@ public class SimulationEngine {
      * @param d the integer day
      */
     private void addScans(ArrayList<ScanEvent> dayScan, ArrayList<Integer> mealPeriodScannedIds, int amount, int t, int d){
-
         for (int i = 0; i < amount; i++){
 
             //generating random id section
@@ -138,18 +135,18 @@ public class SimulationEngine {
                 min -= 60;
             }
 
-
+            //adds to day's scan events
             dayScan.add(new ScanEvent(d, hour, min, id));
         }
 
         //links the created ids and the created scans and places them in the map for the given day
         scansPerDay.put(d, dayScan);
-        System.out.println(amount + " scans added to map");
+        System.out.println(amount + " scans added to map\n");
     }
 
     //calculates a random number of scans based on the time
     /**
-     * @param t integer time in 24hr
+     * @param t integer time in minutes
      * @param meal integer specifying the meal period (see class constants)
      */
     private int generateScanAmount(int t, int meal){
@@ -236,7 +233,7 @@ public class SimulationEngine {
 
     //checks if time is in operating hours
     /**
-     * @param t int time input in 24hr time HH:MM
+     * @param t int time input in minutes
      * @return int that specifies the meal period
      */
     private int mealPeriod(int time){
@@ -286,6 +283,8 @@ public class SimulationEngine {
     }
 
     public static void main(String[] args) {
+
+        //testing generating data for the csv
         SimulationEngine se = new SimulationEngine();
 
         se.generateData();
