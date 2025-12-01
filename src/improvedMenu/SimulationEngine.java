@@ -131,7 +131,7 @@ public class SimulationEngine {
             //the minute is calculated by taking the remaining minutes, offseting by 30 and adding remainer to hours
             int min = (time % 60) + 30;
 
-            if (min >= 60){
+            while (min >= 60){
                 hour++;
                 min -= 60;
             }
