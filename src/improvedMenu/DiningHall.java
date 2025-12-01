@@ -51,7 +51,7 @@ public class DiningHall {
     }
 
     // Return random stay time in the dining hall in minutes
-    // Average: 45min, standard deviation: 10, min 10 minutes
+    // Average: 45min, standard deviation: 10, minimum 10 minutes
     public int timeSpent() {
         Random rand = new Random();
         double mean = 45.0;
@@ -72,23 +72,31 @@ public class DiningHall {
         PriorityQueue<ScanEvent> seatingPq = new PriorityQueue<>(
                 (a, b) -> Integer.compare(a.leavingTime, b.leavingTime));
 
+        // convert the input into a single value
         int targetTime = hour * 60 + minute;
 
+        // the amount of time it takes to serve one person
         int serviceDuration = 1;
-        int nextServerAvilable = 0;
+        int nextServerAvailable = 0;
 
-        // Everyone who scanned BEFORE or AT this time is inside
         for (ScanEvent e : list) {
+            // break if the person entered after the target time
             if (e.enteringTime > targetTime) {
                 break;
             }
-            int serviceStart = Math.max(e.enteringTime, nextServerAvilable);
+            // service start time for this person: if the line is empty, it's the
+            // enteringTime, if there's a line, it will be nextServerAvailable
+            int serviceStart = Math.max(e.enteringTime, nextServerAvailable);
             int serviceEnd = serviceStart + serviceDuration;
-            nextServerAvilable = serviceEnd;
+            nextServerAvailable = serviceEnd;
+
+            // if the service end is after the target time, they're still in line
             if (serviceEnd > targetTime) {
                 lineQueue.add(e);
             } else {
                 e.leavingTime = serviceEnd + e.duration;
+                // if the leavingTime is after the target time, they are still in the dining
+                // hall.
                 if (e.leavingTime > targetTime) {
                     seatingPq.add(e);
                 }
