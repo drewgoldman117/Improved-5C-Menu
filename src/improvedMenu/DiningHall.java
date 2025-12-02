@@ -7,6 +7,10 @@ public class DiningHall {
 
     private ArrayList<ScanEvent> events;
     private Map<Integer, ArrayList<ScanEvent>> dayToEvents;
+    // meal period integers
+    protected static final int MEAL1 = 1;
+    protected static final int MEAL2 = 2;
+    protected static final int MEAL3 = 3;
 
     public DiningHall() {
         this.events = new ArrayList<>();
@@ -28,9 +32,16 @@ public class DiningHall {
                 int userId = Integer.parseInt(p[3]);
 
                 ScanEvent e = new ScanEvent(day, hour, minute, userId);
+                if (450 <= e.enteringTime && e.enteringTime <= 570) {
+                    int mealPeriod = MEAL1;
+                } else if (660 <= e.enteringTime && e.enteringTime <= 810) {
+                    int mealPeriod = MEAL2;
+                } else {
+                    int mealPeriod = MEAL3;
+                }
 
                 // added duration
-                e.duration = timeSpent();
+                e.duration = timeSpent(mealPeriod);
 
                 events.add(e);
 
@@ -51,11 +62,23 @@ public class DiningHall {
     }
 
     // Return random stay time in the dining hall in minutes
-    // Average: 45min, standard deviation: 10, minimum 10 minutes
-    public int timeSpent() {
+    // Breakfast Average: 28.84, Standard Deviation: 26.86
+    // Lunch Average: 38.92, Standard Deviation: 12.39
+    // Dinner Average: 48.09, Standard Deviation: 15.71
+    public int timeSpent(int mealPeriod) {
         Random rand = new Random();
-        double mean = 45.0;
-        double stdDev = 10.0;
+        double mean;
+        double stdDev;
+        if (mealPeriod == MEAL1) {
+            mean = 28.84;
+            stdDev = 26.86;
+        } else if (mealPeriod == MEAL2) {
+            mean = 38.92;
+            stdDev = 12.39;
+        } else {
+            mean = 48.09;
+            stdDev = 15.71;
+        }
         double result = (rand.nextGaussian() * stdDev) + mean;
         int rounded = Math.max(10, (int) Math.ceil(result));
         return rounded;
