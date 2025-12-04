@@ -1,8 +1,8 @@
 /**
- * @author Gavin Honey TODO: ADD AUTHORS
+ * @author Gavin Honey
  *
  */
-//times must be inputted as minutes TODO: make error catching
+//times must be inputted as minutes
 package improvedMenu;
 
 import java.io.FileWriter;
@@ -11,6 +11,7 @@ import java.util.*;
 public class SimulationEngine {
 
     //TODO:change to public if we need to reference in other classes
+    //TODO: need to add random favorite food application
 
     //static variables to reference days of week
     protected static final int MON = 1;
@@ -25,6 +26,8 @@ public class SimulationEngine {
     protected static final int MEAL1 = 1;
     protected static final int MEAL2 = 2;
     protected static final int MEAL3 = 3;
+
+    //----Times must be inputted as minutes, minute 0 intial opening time----//
 
     //opening time for meal period 1 in minutes (07:30)
     private static final int OPEN1 = 0;
@@ -49,20 +52,24 @@ public class SimulationEngine {
     private static final int BUSY = 15;
     private static final int VBUSY = 25;
 
+    //setting the max amount of friends a user will be generated with
+    private static final int FRIENDMAX = 15;
 
+    //setting the max amount of favorite foods a user will be generated with
+    private static final int FOODMAX = 5;
 
-    //frary max capacity (per pomona website)
-    protected static final int FRARYMAX = 325;
+    //Dining hall max capacity (frary's per pomona website)
+    protected static final int DININGHALLMAX = 325;
 
-    //student population of pomona (per pomona website)
+    //student population (pomona's per pomona website)
     protected static final int STUDENTPOP = 1766;
 
-    //use to set the number of individual users to be created for the scan data, we will use 500
-    protected static final int POOLCOUNT = 500;
+    //use to set the number of individual users to be created for the scan data
+    protected static final int POOLCOUNT = 400;
 
     private Random rand; //random object
     private Map<Integer, ArrayList<ScanEvent>> scansPerDay; //keeps track of scans per day (final variable day #, scan event)
-    private ArrayList<User> userPool;
+    protected ArrayList<User> userPool; //stores users
 
     public SimulationEngine() {
         this.rand = new Random();
@@ -70,9 +77,50 @@ public class SimulationEngine {
         this.userPool = new ArrayList<>();
     }
 
-    //generates user pool to grab from for simulated scans
-    public void generateUserPool(){
-        //TODO: implementent
+    //generates user pool, friends, and favorite foods to grab from for simulated scans
+    public void initializeUsers(){
+
+        ArrayList<Integer> idPool = new ArrayList<>();//stores user ids
+
+        //populating id pool
+        for (int i = 0; i < POOLCOUNT; i++){
+            int id = rand.nextInt(STUDENTPOP + 1) + 1; //random id between 1 and student population max
+            
+            while (idPool.contains(id)){
+                id = rand.nextInt(STUDENTPOP + 1) + 1; //generates new id if id is already contained
+            }
+
+            idPool.add(id);
+        }
+
+        //creating random user pool
+        for (int i = 0; i < POOLCOUNT; i++){
+            userPool.add(new User(idPool.get(i)));
+        }
+
+        //TODO: populate friends
+        //TODO: need to add random favorite food application
+        for (int i = 0; i < POOLCOUNT; i++){
+            User currUser = userPool.get(i);
+
+            //adding friends
+            for (int f = 1; f <= rand.nextInt(FRIENDMAX); f++){
+                
+            }
+
+
+            //adding favorite foods
+            for (int f = 1; f <= rand.nextInt(FOODMAX); f++){
+
+            }
+
+        }
+
+
+        
+
+        
+                
     }
 
     //Generates a week worth of scan data for each day and meal period, writes to a CSV for use
@@ -82,12 +130,12 @@ public class SimulationEngine {
 
             //to store day's scans
             ArrayList<ScanEvent> dayScan = new ArrayList<>();
-            ArrayList<Integer> mealPeriodIds = new ArrayList<>();
+            ArrayList<User> mealPeriodUsers = new ArrayList<>();
 
             //iterates through times of operation (in 10 minute increments)
             for (int t = OPEN1; t <= CLOSE3; t += 10){
                 if (mealPeriod(t) == -1){
-                    mealPeriodIds = new ArrayList<>(); //resets mealperiodids as it is a new meal period
+                    mealPeriodUsers = new ArrayList<>(); //resets mealperiodids as it is a new meal period
                     t += 20; //adds 20 to t, plus the base 10 to increment by a 30 minute interval
                     continue;
                 }
@@ -102,7 +150,7 @@ public class SimulationEngine {
 
 
                 //helper to add the scans to the map
-                addScans(dayScan, mealPeriodIds, amount, t, d);
+                addScans(dayScan, mealPeriodUsers, amount, t, d);
             }
 
             System.out.println("Day " + d + " completed\n");
@@ -116,19 +164,22 @@ public class SimulationEngine {
      * @param amount integer that specifies the amount of scans to be created
      * @param t the start time (minute) of the 10 minute period
      * @param d the integer day
+     * @param mealPeriodUser ArrayList of users to track those who have already scanned in for the meal period
+     * @param dayScan ArrayList of scan events for that day
      */
-    private void addScans(ArrayList<ScanEvent> dayScan, ArrayList<Integer> mealPeriodScannedIds, int amount, int t, int d){
+    private void addScans(ArrayList<ScanEvent> dayScan, ArrayList<User> mealPeriodUsers, int amount, int t, int d){
         for (int i = 0; i < amount; i++){
 
-            //generating random id section
-            int id = rand.nextInt(STUDENTPOP + 1) + 1; //random id between 1 and student population max
+            //pulling random user from pool
+            User randomUser = userPool.get(rand.nextInt(POOLCOUNT)); //random user index from pool
             
-            while (mealPeriodScannedIds.contains(id)){
-                //generates until it is a unique id
-                id = rand.nextInt(STUDENTPOP + 1) + 1;
+            //checks if user has already scanner
+            while (mealPeriodUsers.contains(randomUser)){
+                //pulls another user
+                randomUser = userPool.get(rand.nextInt(POOLCOUNT));
             }
         
-            mealPeriodScannedIds.add(id); //adds user to known user base
+            mealPeriodUsers.add(randomUser); //adds user to known user base
 
 
             //generating random time section
@@ -147,7 +198,7 @@ public class SimulationEngine {
             }
 
             //adds to day's scan events
-            dayScan.add(new ScanEvent(d, hour, min, id));
+            dayScan.add(new ScanEvent(d, hour, min, randomUser.getId()));
         }
 
         //links the created ids and the created scans and places them in the map for the given day
@@ -157,8 +208,7 @@ public class SimulationEngine {
         //System.out.println(amount + " scans added to map\n");
     }
 
-    //calculates a random number of scans based on the time
-    /**
+    /** calculates a random number of scans based on the time
      * @param t integer time in minutes
      * @param meal integer specifying the meal period (see class constants)
      */
@@ -171,7 +221,7 @@ public class SimulationEngine {
             //From speaking to our peers, we estimate around 1/5 of people do not frequent breakfast, thus we will only take 4/5 of the flow rate
             //TODO: ask if we can do this
             case MEAL1: {
-                flowRate = (FRARYMAX/(CLOSE1 - OPEN1)) * 4/5;
+                flowRate = (DININGHALLMAX/(CLOSE1 - OPEN1)) * 4/5;
 
                 //if within the first 30 minutes of a meal period, set offset to NOTBUSY
                 if (t <= OPEN1 + 30){
@@ -191,7 +241,7 @@ public class SimulationEngine {
             }
 
             case MEAL2: {
-                flowRate = FRARYMAX/(CLOSE2 - OPEN2);
+                flowRate = DININGHALLMAX/(CLOSE2 - OPEN2);
 
                 //if within the first 30 minutes of a meal period, set offset to NOTBUSY
                 if (t <= OPEN2 + 30){
@@ -209,7 +259,7 @@ public class SimulationEngine {
             }
 
             case MEAL3: {
-                flowRate = FRARYMAX/(CLOSE3 - OPEN3);
+                flowRate = DININGHALLMAX/(CLOSE3 - OPEN3);
 
                 //if within the first 30 minutes of a meal period, set offset to NOTBUSY
                 if (t <= OPEN3 + 30){
@@ -245,8 +295,7 @@ public class SimulationEngine {
         return flowRate + offset;
     }
 
-    //checks if time is in operating hours
-    /**
+    /** checks if time is in operating hours
      * @param t int time input in minutes
      * @return int that specifies the meal period
      */
@@ -271,7 +320,7 @@ public class SimulationEngine {
         return -1;
     }
 
-    // Get all simulated data (if you want to use it directly in memory)
+    // Get all simulated data
     public Map<Integer, ArrayList<ScanEvent>> getAllScanData() {
         return scansPerDay;
     }
@@ -300,6 +349,8 @@ public class SimulationEngine {
 
         //testing generating data for the csv
         SimulationEngine se = new SimulationEngine();
+
+        se.initializeUsers();
 
         se.generateData();
     }
