@@ -1,8 +1,10 @@
 package improvedMenu;
+import java.util.ArrayList;
 
 public class SystemManager {
 
     private DiningHall diningHall;
+    protected static ArrayList<String> menu; //to be accessed across package
 
     public SystemManager() {
         diningHall = new DiningHall();

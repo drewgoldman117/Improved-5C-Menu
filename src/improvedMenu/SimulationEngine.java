@@ -77,8 +77,11 @@ public class SimulationEngine {
         this.userPool = new ArrayList<>();
     }
 
-    //generates user pool, friends, and favorite foods to grab from for simulated scans
-    public void initializeUsers(){
+    /**generates user pool, friends, and favorite foods to grab from for simulated scans
+     * @param menu string filepath of the file to be read
+     */
+
+    public void initializeUsers(String menu){
 
         ArrayList<Integer> idPool = new ArrayList<>();//stores user ids
 
@@ -98,9 +101,10 @@ public class SimulationEngine {
             userPool.add(new User(idPool.get(i)));
         }
 
-        //TODO: populate friends
-        //TODO: need to add random favorite food application
-        for (int i = 0; i < POOLCOUNT; i++){
+
+        //TODO: CHANGE FOR FINAL BACK TO POOL
+        for (int i = 0; i < 10//testing value
+        ; i++){
             User currUser = userPool.get(i);
 
             //adding friends
@@ -115,11 +119,15 @@ public class SimulationEngine {
             }
 
 
-            //adding favorite foods
-            for (int f = 1; f <= rand.nextInt(FOODMAX); f++){
-
+            //adding favorite foods TODO:finish this
+            for (int f = 0; f <= rand.nextInt(FOODMAX); f++){
+                //gets random food from menu
+                String favFood = SystemManager.menu.get(rand.nextInt(SystemManager.menu.size()));
             }
 
+
+            //for testing
+            System.out.println(currUser);
         }
 
 
@@ -356,7 +364,9 @@ public class SimulationEngine {
         //testing generating data for the csv
         SimulationEngine se = new SimulationEngine();
 
-        se.initializeUsers();
+        String menupath = "./frary_menu_extended.csv";
+
+        se.initializeUsers(menupath);
 
         se.generateData();
     }
