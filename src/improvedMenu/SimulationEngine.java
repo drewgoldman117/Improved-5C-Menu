@@ -57,12 +57,22 @@ public class SimulationEngine {
     //student population of pomona (per pomona website)
     protected static final int STUDENTPOP = 1766;
 
+    //use to set the number of individual users to be created for the scan data, we will use 500
+    protected static final int POOLCOUNT = 500;
+
     private Random rand; //random object
     private Map<Integer, ArrayList<ScanEvent>> scansPerDay; //keeps track of scans per day (final variable day #, scan event)
+    private ArrayList<User> userPool;
 
     public SimulationEngine() {
         this.rand = new Random();
         this.scansPerDay = new HashMap<>();
+        this.userPool = new ArrayList<>();
+    }
+
+    //generates user pool to grab from for simulated scans
+    public void generateUserPool(){
+        //TODO: implementent
     }
 
     //Generates a week worth of scan data for each day and meal period, writes to a CSV for use
