@@ -105,7 +105,13 @@ public class SimulationEngine {
 
             //adding friends
             for (int f = 1; f <= rand.nextInt(FRIENDMAX); f++){
+                //random user selected to be friend
+                User randFriend = userPool.get(rand.nextInt(POOLCOUNT));
+                while (randFriend.getId() == currUser.getId()){
+                    randFriend = userPool.get(rand.nextInt(POOLCOUNT));
+                }
                 
+                currUser.addFriend(randFriend.getId());
             }
 
 

@@ -60,4 +60,50 @@ public class User {
     }
 
 
+    @Override
+    //hashes based on id
+    public int hashCode(){
+        return Integer.hashCode(id);
+    }
+
+    //equality determined by user id
+    public boolean equals (Object o){
+        if (o == this) {return true;}
+        if (o == null) {return false;}
+        if (o.getClass() != this.getClass()){return false;}
+        User u = (User) o;
+
+        return this.id == u.id;
+    }
+
+    //returns string representation of a user
+    public String toString(){
+        String friends = "";
+        String foods = "";
+
+        for (int num : this.friends){
+            friends += "User " + num + ", ";
+        }
+
+        for (String s : favFoods){
+            foods += s + ", ";
+        }
+
+        return "|User " + id + "\n|Foods: " + foods + "\n|Friends: " + friends;
+    }
+
+    //user testing
+    public static void main(String[] args) {
+       User u1 = new User(0);
+       u1.addFavFood("Burger");
+       u1.addFavFood("Eggs");
+       u1.addFavFood("Pizza");
+
+       u1.addFriend(1);
+       u1.addFriend(2);
+       u1.addFriend(3);
+
+       System.out.println(u1.toString());
+    }
+
 }
