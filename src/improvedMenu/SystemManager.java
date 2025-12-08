@@ -1,10 +1,11 @@
 package improvedMenu;
+
 import java.util.ArrayList;
 
 public class SystemManager {
 
     private DiningHall diningHall;
-    protected static ArrayList<String> menu; //to be accessed across package
+    protected static ArrayList<String> menu; // to be accessed across package
 
     public SystemManager() {
         diningHall = new DiningHall();
@@ -17,12 +18,12 @@ public class SystemManager {
 
     // wrapper for occupancy
     public int getOccupancy(int day, int hour, int minute) {
-        return diningHall.getOccupancy(day, hour, minute);
+        return diningHall.getOccupancy(day, hour, minute)[1];
     }
 
     // wrapper for wait time
     public int getWaitTime(int day, int hour, int minute) {
-        int occ = diningHall.getOccupancy(day, hour, minute);
+        int occ = diningHall.getOccupancy(day, hour, minute)[2];
         return diningHall.getWaitTime(occ);
     }
 }
