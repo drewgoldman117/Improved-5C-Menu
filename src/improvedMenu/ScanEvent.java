@@ -17,4 +17,10 @@ public class ScanEvent {
         this.userId = u;
         this.enteringTime = h * 60 + m;
     }
+
+    @Override
+    public String toString() {
+        // This will print: [487 at 7:00]
+        return "[" + userId + " at " + hour + ":" + minute + "]";
+    }
 }

@@ -32,12 +32,13 @@ public class DiningHall {
                 int userId = Integer.parseInt(p[3]);
 
                 ScanEvent e = new ScanEvent(day, hour, minute, userId);
+                int mealPeriod;
                 if (450 <= e.enteringTime && e.enteringTime <= 570) {
-                    int mealPeriod = MEAL1;
+                    mealPeriod = MEAL1;
                 } else if (660 <= e.enteringTime && e.enteringTime <= 810) {
-                    int mealPeriod = MEAL2;
+                    mealPeriod = MEAL2;
                 } else {
-                    int mealPeriod = MEAL3;
+                    mealPeriod = MEAL3;
                 }
 
                 // added duration
@@ -125,7 +126,9 @@ public class DiningHall {
                 }
             }
         }
-
+        // the time is their entrance time
+        System.out.println("People currently in line (not in order): " + lineQueue);
+        System.out.println("People seated: " + seatingPq);
         return new int[] { lineQueue.size(), seatingPq.size() };
     }
 
@@ -133,6 +136,15 @@ public class DiningHall {
     public int getWaitTime(int lineVolume) {
         int serviceDuration = 1;
         return serviceDuration * lineVolume;
+    }
+
+    public static void main(String[] args) {
+        DiningHall test = new DiningHall();
+        test.loadData("data/generated_scans.csv");
+        int[] result = test.getOccupancy(1, 7, 50);
+        System.out.println("line size: " + result[0] + "seating size: " + result[1]);
+        System.out.println("wait time: " + test.getWaitTime(result[0]));
+
     }
 
 }
