@@ -12,6 +12,9 @@ public class DiningHall {
     protected static final int MEAL2 = 2;
     protected static final int MEAL3 = 3;
 
+    Queue<ScanEvent> lineQueue;
+    PriorityQueue<ScanEvent> seatingPq;
+
     public DiningHall() {
         this.events = new ArrayList<>();
         this.dayToEvents = new HashMap<>();
@@ -91,8 +94,8 @@ public class DiningHall {
         if (list == null)
             return null;
 
-        Queue<ScanEvent> lineQueue = new ArrayDeque<>();
-        PriorityQueue<ScanEvent> seatingPq = new PriorityQueue<>(
+        this.lineQueue = new ArrayDeque<>();
+        this.seatingPq = new PriorityQueue<>(
                 (a, b) -> Integer.compare(a.leavingTime, b.leavingTime));
 
         // convert the input into a single value
@@ -125,11 +128,9 @@ public class DiningHall {
                 }
             }
         }
-        // the time is their entrance time
-        System.out.println("People currently in line (not in order): " + lineQueue);
-        System.out.println("People seated: " + seatingPq);
+
         int waitTime = getWaitTime(lineQueue.size());
-        System.out.println("Estimated wait time: " + waitTime + " min");
+        // System.out.println("Estimated wait time: " + waitTime + " min");
         return new int[] { lineQueue.size(), seatingPq.size(), waitTime };
     }
 
@@ -144,7 +145,8 @@ public class DiningHall {
         test.loadData("data/generated_scans.csv");
         int[] result = test.getOccupancy(1, 7, 50);
         System.out.println("line size: " + result[0] + " seating size: " + result[1]);
-
+        System.out.println("people in line: " + test.lineQueue);
+        System.out.println("people in the hall: " + test.seatingPq);
     }
 
 }
