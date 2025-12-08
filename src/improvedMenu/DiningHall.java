@@ -85,8 +85,7 @@ public class DiningHall {
         return rounded;
     }
 
-    // Count how many people are inside at a specific time, this logic does not make
-    // any sense yet
+    // Returns [line size, the number of people eating, wait time]
     public int[] getOccupancy(int day, int hour, int minute) {
         ArrayList<ScanEvent> list = dayToEvents.get(day);
         if (list == null)
@@ -129,7 +128,9 @@ public class DiningHall {
         // the time is their entrance time
         System.out.println("People currently in line (not in order): " + lineQueue);
         System.out.println("People seated: " + seatingPq);
-        return new int[] { lineQueue.size(), seatingPq.size() };
+        int waitTime = getWaitTime(lineQueue.size());
+        System.out.println("Estimated wait time: " + waitTime + "min");
+        return new int[] { lineQueue.size(), seatingPq.size(), waitTime };
     }
 
     // Need to fix this
@@ -142,8 +143,7 @@ public class DiningHall {
         DiningHall test = new DiningHall();
         test.loadData("data/generated_scans.csv");
         int[] result = test.getOccupancy(1, 7, 50);
-        System.out.println("line size: " + result[0] + "seating size: " + result[1]);
-        System.out.println("wait time: " + test.getWaitTime(result[0]));
+        System.out.println("line size: " + result[0] + " seating size: " + result[1]);
 
     }
 
