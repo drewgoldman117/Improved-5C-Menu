@@ -129,7 +129,7 @@ public class DiningHall {
         System.out.println("People currently in line (not in order): " + lineQueue);
         System.out.println("People seated: " + seatingPq);
         int waitTime = getWaitTime(lineQueue.size());
-        System.out.println("Estimated wait time: " + waitTime + "min");
+        System.out.println("Estimated wait time: " + waitTime + " min");
         return new int[] { lineQueue.size(), seatingPq.size(), waitTime };
     }
 
