@@ -30,7 +30,8 @@ public class Main {
 
         System.out.print("Enter minute (0,10,20,30,40,50): ");
         int minute = in.nextInt();
-        while (minute != 0 || minute != 10 || minute != 20 || minute != 30 || minute != 40 || minute != 50) {
+        System.out.println(minute);
+        while (minute != 0 && minute != 10 && minute != 20 && minute != 30 && minute != 40 && minute != 50) {
             System.out.print("Input has to be (0,10,20,30,40,50)");
             minute = in.nextInt();
         }
