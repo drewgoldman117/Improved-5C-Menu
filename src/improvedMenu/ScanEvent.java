@@ -20,6 +20,24 @@ public class ScanEvent {
         this.enteringTime = h * 60 + m;
     }
 
+    //returns day of event
+    public int getDay(){
+        return day;
+    }
+
+    //returns time in minutes of event
+    public int getTime(){
+        return hour * 60 + minute;
+    }
+
+
+    //returns the userId of the event
+    public int getUserId(){
+        return userId;
+    }
+
+
+
     @Override
     public String toString() {
         // This will print: [487 at 7:00]

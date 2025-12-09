@@ -75,6 +75,11 @@ public class SystemManager {
         this.occupancyInfo = diningHall.getOccupancy(day, hour, minute);
     }
 
+    //returns dining hall object in use
+    public DiningHall getDiningHall(){
+        return diningHall;
+    }
+
     // wrapper for occupancy
     public int getOccupancy(int day, int hour, int minute) {
         return occupancyInfo[1];
