@@ -69,7 +69,8 @@ public class SimulationEngine {
 
     private Random rand; //random object
     private Map<Integer, ArrayList<ScanEvent>> scansPerDay; //keeps track of scans per day (final variable day #, scan event)
-    protected ArrayList<User> userPool; //stores users
+    protected ArrayList<User> userPool; //stores users for generation
+    protected HashMap<Integer, User> userMap; //store users for main method use
 
     public SimulationEngine() {
         this.rand = new Random();
@@ -123,6 +124,11 @@ public class SimulationEngine {
             for (int f = 0; f <= rand.nextInt(FOODMAX); f++){
                 //gets random food from menu
                 String favFood = SystemManager.menu.get(rand.nextInt(SystemManager.menu.size()));
+            }
+
+            //add user pool to map for main use
+            for (User u : userPool){
+                userMap.put(u.getId(), u);
             }
 
 
@@ -313,7 +319,7 @@ public class SimulationEngine {
      * @param t int time input in minutes
      * @return int that specifies the meal period
      */
-    private int mealPeriod(int time){
+    protected int mealPeriod(int time){
         //checks if time lies within an operation time
 
         //in between period 1 and 2
