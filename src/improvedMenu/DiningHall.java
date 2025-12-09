@@ -10,8 +10,8 @@ public class DiningHall {
     private ArrayList<ScanEvent> events;
     private Map<Integer, ArrayList<ScanEvent>> dayToEvents;
 
-    Queue<ScanEvent> lineQueue;
-    PriorityQueue<ScanEvent> seatingPq;
+    private Queue<ScanEvent> lineQueue;
+    private PriorityQueue<ScanEvent> seatingPq;
 
     public DiningHall() {
         this.events = new ArrayList<>();
@@ -132,10 +132,20 @@ public class DiningHall {
         return new int[] { lineQueue.size(), seatingPq.size(), waitTime };
     }
 
-    // Need to fix this
+    // TODO: Need to fix this
     public int getWaitTime(int lineVolume) {
         int serviceDuration = 1;
         return serviceDuration * lineVolume;
+    }
+
+    //returns priority queue
+    public PriorityQueue<ScanEvent> getPQ(){
+        return seatingPq;
+    }
+
+    //returns queue
+    public Queue<ScanEvent> getQ(){
+        return lineQueue;
     }
 
     public static void main(String[] args) {
