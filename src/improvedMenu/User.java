@@ -2,7 +2,7 @@ package improvedMenu;
 import java.util.*;
 
 /**
- * @author Gavin Honey
+ * @author @ghoney47
  * */
 
 public class User {

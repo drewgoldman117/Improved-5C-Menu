@@ -1,5 +1,5 @@
 /**
- * @author Gavin Honey, TODO:ADD NAMES
+ * @author @ghoney47 @ryokasai19
  */
 
 package improvedMenu;
@@ -60,7 +60,7 @@ public class Main {
             System.out.println("People eating: " + peopleEating);
 
             //TODO: USER OUTPUT AND INDIVIDUAL USER STATS
-            
+
 
         }
     }

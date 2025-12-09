@@ -1,5 +1,5 @@
 /**
- * @author Gavin Honey
+ * @author @ghoney47
  *
  */
 //times must be inputted as minutes
@@ -9,9 +9,7 @@ import java.io.FileWriter;
 import java.util.*;
 
 public class SimulationEngine {
-
-    //TODO:change to public if we need to reference in other classes
-    //TODO: need to add random favorite food application
+  
 
     //static variables to reference days of week
     protected static final int MON = 1;
@@ -150,12 +148,6 @@ public class SimulationEngine {
             //for testing
             System.out.println(currUser);
         }
-
-
-        
-
-        
-                
     }
 
     //Generates a week worth of scan data for each day and meal period, writes to a CSV for use
@@ -254,7 +246,6 @@ public class SimulationEngine {
         switch (meal){
 
             //From speaking to our peers, we estimate around 1/5 of people do not frequent breakfast, thus we will only take 4/5 of the flow rate
-            //TODO: ask if we can do this
             case MEAL1: {
                 flowRate = (DININGHALLMAX/(CLOSE1 - OPEN1)) * 4/5;
 
