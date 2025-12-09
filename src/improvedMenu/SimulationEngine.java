@@ -102,7 +102,7 @@ public class SimulationEngine {
         }
 
 
-        //TODO: CHANGE FOR FINAL BACK TO POOL
+        //TODO: CHANGE FOR FINAL BACK TO POOL once FOOD ADDITION IS FIXED
         for (int i = 0; i < 10//testing value
         ; i++){
             User currUser = userPool.get(i);
