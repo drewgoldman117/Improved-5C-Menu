@@ -69,13 +69,16 @@ public class SimulationEngine {
 
     private Random rand; //random object
     private Map<Integer, ArrayList<ScanEvent>> scansPerDay; //keeps track of scans per day (final variable day #, scan event)
+    private ArrayList<String> allFoods;
     protected ArrayList<User> userPool; //stores users for generation
     protected HashMap<Integer, User> userMap; //store users for main method use
+    
 
     public SimulationEngine() {
         this.rand = new Random();
         this.scansPerDay = new HashMap<>();
         this.userPool = new ArrayList<>();
+        this.userMap = new HashMap<>();
     }
 
     /**generates user pool, friends, and favorite foods to grab from for simulated scans
@@ -103,9 +106,8 @@ public class SimulationEngine {
         }
 
 
-        //TODO: CHANGE FOR FINAL BACK TO POOL once FOOD ADDITION IS FIXED
-        for (int i = 0; i < 10//testing value
-        ; i++){
+        //adds foods and friends to each user
+        for (int i = 0; i < POOLCOUNT; i++){
             User currUser = userPool.get(i);
 
             //adding friends
@@ -119,12 +121,25 @@ public class SimulationEngine {
                 currUser.addFriend(randFriend.getId());
             }
 
+            //parser to populate all possible menu items
+            Parser p = new Parser(menu);
+            allFoods = p.getItems();
 
-            //adding favorite foods TODO:finish this
+            //adding favorite foods 
             for (int f = 0; f <= rand.nextInt(FOODMAX); f++){
                 //gets random food from menu
-                String favFood = SystemManager.menu.get(rand.nextInt(SystemManager.menu.size()));
+                String favFood = allFoods.get(rand.nextInt(allFoods.size()));
+
+                //checks for food uniqueness
+                while (currUser.getFoods().contains(favFood)){
+                    favFood = allFoods.get(rand.nextInt(allFoods.size()));
+                }
+
+                //adds food
+                currUser.addFavFood(favFood);
             }
+
+
 
             //add user pool to map for main use
             for (User u : userPool){
@@ -365,6 +380,8 @@ public class SimulationEngine {
         }
     }
 
+
+    //testing
     public static void main(String[] args) {
 
         //testing generating data for the csv

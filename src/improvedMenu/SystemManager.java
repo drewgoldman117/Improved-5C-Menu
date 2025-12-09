@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class SystemManager {
 
     private DiningHall diningHall;
-    protected static ArrayList<String> menu; // to be accessed across package
+    protected static ArrayList<String> allMenuItems; // to be accessed across package
     // to keep track latest data
     private int[] occupancyInfo = { 0, 0, 0 };
 
