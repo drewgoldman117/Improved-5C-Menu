@@ -12,12 +12,14 @@ public class ScanEvent {
     public int duration;
     public int leavingTime;
 
+    private int openOffset = 450; //offsets the entering time in minutes to start at 0 when time is 07:30
+
     public ScanEvent(int d, int h, int m, int u) {
         this.day = d;
         this.hour = h;
         this.minute = m;
         this.userId = u;
-        this.enteringTime = h * 60 + m;
+        this.enteringTime = (h * 60 + m) - openOffset;
     }
 
     //returns day of event
