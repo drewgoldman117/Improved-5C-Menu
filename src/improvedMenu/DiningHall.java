@@ -132,7 +132,6 @@ public class DiningHall {
         return new int[] { lineQueue.size(), seatingPq.size(), waitTime };
     }
 
-    // TODO: Need to fix this
     public int getWaitTime(int lineVolume) {
         int serviceDuration = 1;
         return serviceDuration * lineVolume;

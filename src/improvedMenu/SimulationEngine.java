@@ -106,7 +106,7 @@ public class SimulationEngine {
 
 
             //for testing
-            System.out.println(currUser);
+            //System.out.println(currUser);
         }
     }
 
@@ -140,7 +140,7 @@ public class SimulationEngine {
                 addScans(dayScan, mealPeriodUsers, amount, t, d);
             }
 
-            System.out.println("Day " + d + " completed\n");
+            System.out.println("Day " + d + " generated\n");
         }
 
         saveToCSV("./data/generated_scans.csv");

@@ -48,7 +48,9 @@ public class User {
      */
     public void addFavFood(String food){
         favFoods.add(food);
-        System.out.println("Food: " + food + " has been added to User " + id);
+
+        //testing
+        //System.out.println("Food: " + food + " has been added to User " + id);
     }
 
     /** adds new friend id to user
@@ -56,7 +58,9 @@ public class User {
      */
     public void addFriend(int id){
         friends.add(id);
-        System.out.println("Friend id: " + id + " has been added to User " + this.id);
+
+        //testing
+        //System.out.println("Friend id: " + id + " has been added to User " + this.id);
     }
 
 

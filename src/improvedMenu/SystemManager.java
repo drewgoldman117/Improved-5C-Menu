@@ -91,10 +91,10 @@ public class SystemManager {
     }
 
     public String peopleInLine() {
-        return diningHall.lineQueue.toString();
+        return diningHall.getQ().toString();
     }
 
     public String peopleEating() {
-        return diningHall.seatingPq.toString();
+        return diningHall.getPQ().toString();
     }
 }

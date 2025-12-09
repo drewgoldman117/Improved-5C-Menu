@@ -28,7 +28,6 @@ public class Main {
 
         //main user loop
         while (true){
-
             //day of week input
             System.out.print("Enter day of week (1-7): ");
             int day = in.nextInt();
@@ -63,7 +62,7 @@ public class Main {
             int mealPeriod = se.mealPeriod(hour * 60 + minute); 
 
             System.out.println("\n--- Results ---");
-            System.out.println("Estimated occupancy: " + occupancy);
+            System.out.println("Occupancy: " + occupancy);
             System.out.println("Estimated wait time: " + wait + " minutes");
             System.out.println("People in line (not in order): " + peopleInLine);
             System.out.println("People eating: " + peopleEating);
@@ -74,8 +73,9 @@ public class Main {
 
                 //prints some known IDs to be used to sign in (the amount potential IDs can be changed at will)
                 for (int i = 0; i < 10; i++){
-                    System.out.print("User "+ (i + 1) + ": " + se.userPool.get(i).getId());
+                    System.out.print("User "+ (i + 1) + ": " + se.userPool.get(i).getId() + ", ");
                 }
+                System.out.println(); //formatting line
 
                 try {
                     System.out.println("Enter ID to sign in: ");
@@ -96,13 +96,13 @@ public class Main {
                         }
                     }
 
-                } catch (InputMismatchException e){
-                    System.out.println("Invalid input");
-                } catch (NoSuchElementException e){
-                    System.out.println("Invalid input");
-                }
+                } catch (NullPointerException e){
+                    System.out.println("User does not exist");
+                    continue;
+                } 
 
-                System.out.println("Do you want to change the date/time (y/n)");
+                System.out.println(); //formatting line
+                System.out.println("Do you want to change the date/time or quit (y/n)");
 
                 //user wants to change date, breaks out of inner loop
                 if (in.nextLine().toLowerCase().equals("y")){
@@ -110,8 +110,22 @@ public class Main {
                 }
             }
             
+            System.out.println("Quit (y/n)");
+            String exitString = in.nextLine();
+            while (true) { //exits when input is y or n
+                if (exitString.toLowerCase().equals("y") || exitString.toLowerCase().equals("n")){
+                    break;
+                }
+                System.out.println("Please enter 'y' or 'n':");
+            }
 
-
+            //user terminates loop and ends program
+            if (exitString.toLowerCase().equals("y")){
+                break;
+            }            
         }
+
+        in.close();
+        
     }
 }
