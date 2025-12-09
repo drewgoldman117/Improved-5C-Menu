@@ -9,10 +9,6 @@ public class DiningHall {
 
     private ArrayList<ScanEvent> events;
     private Map<Integer, ArrayList<ScanEvent>> dayToEvents;
-    // meal period integers
-    protected static final int MEAL1 = 1;
-    protected static final int MEAL2 = 2;
-    protected static final int MEAL3 = 3;
 
     Queue<ScanEvent> lineQueue;
     PriorityQueue<ScanEvent> seatingPq;
@@ -39,11 +35,11 @@ public class DiningHall {
                 ScanEvent e = new ScanEvent(day, hour, minute, userId);
                 int mealPeriod;
                 if (450 <= e.enteringTime && e.enteringTime <= 570) {
-                    mealPeriod = MEAL1;
+                    mealPeriod = SystemManager.MEAL1;
                 } else if (660 <= e.enteringTime && e.enteringTime <= 810) {
-                    mealPeriod = MEAL2;
+                    mealPeriod = SystemManager.MEAL2;
                 } else {
-                    mealPeriod = MEAL3;
+                    mealPeriod = SystemManager.MEAL3;
                 }
 
                 // added duration
@@ -75,10 +71,10 @@ public class DiningHall {
         Random rand = new Random();
         double mean;
         double stdDev;
-        if (mealPeriod == MEAL1) {
+        if (mealPeriod == SystemManager.MEAL1) {
             mean = 28.84;
             stdDev = 26.86;
-        } else if (mealPeriod == MEAL2) {
+        } else if (mealPeriod == SystemManager.MEAL2) {
             mean = 38.92;
             stdDev = 12.39;
         } else {

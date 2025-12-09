@@ -9,43 +9,8 @@ import java.io.FileWriter;
 import java.util.*;
 
 public class SimulationEngine {
-  
 
-    //static variables to reference days of week
-    protected static final int MON = 1;
-    protected static final int TUES = 2;
-    protected static final int WED = 3;
-    protected static final int TR = 4;
-    protected static final int FRI = 5;
-    protected static final int SAT = 6;
-    protected static final int SUN = 7;
-
-    //meal period integers
-    protected static final int MEAL1 = 1;
-    protected static final int MEAL2 = 2;
-    protected static final int MEAL3 = 3;
-
-    //----Times must be inputted as minutes, minute 0 intial opening time----//
-
-    //opening time for meal period 1 in minutes (07:30)
-    private static final int OPEN1 = 0;
-
-    //closing time for meal period 1 in minutes (09:30)
-    private static final int CLOSE1 = 120;
-
-    //opening time for meal period 2 in minutes (11:00)
-    private static final int OPEN2 = 210;
-
-    //closing time for meal period 2 in minutes (13:30)
-    private static final int CLOSE2 = 360;
-
-    //opening time for meal period 3 in minutes (17:00)
-    private static final int OPEN3 = 570;
-
-    //closing time for meal period 3 in minutes (19:30)
-    private static final int CLOSE3 = 720;
-
-    //busyness offset
+    //busyness offsets
     private static final int NOTBUSY = 10;
     private static final int BUSY = 15;
     private static final int VBUSY = 25;
@@ -56,16 +21,10 @@ public class SimulationEngine {
     //setting the max amount of favorite foods a user will be generated with
     private static final int FOODMAX = 5;
 
-    //Dining hall max capacity (frary's per pomona website)
-    protected static final int DININGHALLMAX = 325;
-
-    //student population (pomona's per pomona website)
-    protected static final int STUDENTPOP = 1766;
-
     //use to set the number of individual users to be created for the scan data
     protected static final int POOLCOUNT = 400;
 
-    private Random rand; //random object
+    private final Random rand; //random object
     private Map<Integer, ArrayList<ScanEvent>> scansPerDay; //keeps track of scans per day (final variable day #, scan event)
     private ArrayList<String> allFoods;
     protected ArrayList<User> userPool; //stores users for generation
@@ -89,10 +48,10 @@ public class SimulationEngine {
 
         //populating id pool
         for (int i = 0; i < POOLCOUNT; i++){
-            int id = rand.nextInt(STUDENTPOP + 1) + 1; //random id between 1 and student population max
+            int id = rand.nextInt(SystemManager.STUDENTPOP + 1) + 1; //random id between 1 and student population max
             
             while (idPool.contains(id)){
-                id = rand.nextInt(STUDENTPOP + 1) + 1; //generates new id if id is already contained
+                id = rand.nextInt(SystemManager.STUDENTPOP + 1) + 1; //generates new id if id is already contained
             }
 
             idPool.add(id);
@@ -122,7 +81,7 @@ public class SimulationEngine {
             //parser to populate all possible menu items
             //TODO: expect this to change
             MenuParser mp = new MenuParser(menu);
-            allFoods = p.getItems();
+            allFoods = mp.getItems();
 
             //adding favorite foods 
             for (int f = 0; f <= rand.nextInt(FOODMAX); f++){
@@ -154,14 +113,14 @@ public class SimulationEngine {
     //Generates a week worth of scan data for each day and meal period, writes to a CSV for use
     public void generateData() {
         //iterates through all days
-        for (int d = MON; d <= SUN; d++){
+        for (int d = SystemManager.MON; d <= SystemManager.SUN; d++){
 
             //to store day's scans
             ArrayList<ScanEvent> dayScan = new ArrayList<>();
             ArrayList<User> mealPeriodUsers = new ArrayList<>();
 
             //iterates through times of operation (in 10 minute increments)
-            for (int t = OPEN1; t <= CLOSE3; t += 10){
+            for (int t = SystemManager.OPEN1; t <= SystemManager.CLOSE3; t += 10){
                 if (mealPeriod(t) == -1){
                     mealPeriodUsers = new ArrayList<>(); //resets mealperiodids as it is a new meal period
                     t += 20; //adds 20 to t, plus the base 10 to increment by a 30 minute interval
@@ -247,15 +206,15 @@ public class SimulationEngine {
         switch (meal){
 
             //From speaking to our peers, we estimate around 1/5 of people do not frequent breakfast, thus we will only take 4/5 of the flow rate
-            case MEAL1: {
-                flowRate = (DININGHALLMAX/(CLOSE1 - OPEN1)) * 4/5;
+            case SystemManager.MEAL1: {
+                flowRate = (SystemManager.DININGHALLMAX/(SystemManager.CLOSE1 - SystemManager.OPEN1)) * 4/5;
 
                 //if within the first 30 minutes of a meal period, set offset to NOTBUSY
-                if (t <= OPEN1 + 30){
+                if (t <= SystemManager.OPEN1 + 30){
                     offset = NOTBUSY;
 
                 //if within the last 30 minutes of a meal period, set offset to BUSY
-                } else if (t >= CLOSE1 - 30){
+                } else if (t >= SystemManager.CLOSE1 - 30){
                     offset = BUSY;
 
                 //otherwise, middle period is most busy, set offset to VBUSY
@@ -267,15 +226,15 @@ public class SimulationEngine {
 
             }
 
-            case MEAL2: {
-                flowRate = DININGHALLMAX/(CLOSE2 - OPEN2);
+            case SystemManager.MEAL2: {
+                flowRate = SystemManager.DININGHALLMAX/(SystemManager.CLOSE2 - SystemManager.OPEN2);
 
                 //if within the first 30 minutes of a meal period, set offset to NOTBUSY
-                if (t <= OPEN2 + 30){
+                if (t <= SystemManager.OPEN2 + 30){
                     offset = NOTBUSY;
 
                 //if within the last 30 minutes of a meal period, set offset to BUSY
-                } else if (t >= CLOSE2 - 30){
+                } else if (t >= SystemManager.CLOSE2 - 30){
                     offset = BUSY;
 
                 //otherwise, middle period is most busy, set offset to VBUSY
@@ -285,15 +244,15 @@ public class SimulationEngine {
                 break;
             }
 
-            case MEAL3: {
-                flowRate = DININGHALLMAX/(CLOSE3 - OPEN3);
+            case SystemManager.MEAL3: {
+                flowRate = SystemManager.DININGHALLMAX/(SystemManager.CLOSE3 - SystemManager.OPEN3);
 
                 //if within the first 30 minutes of a meal period, set offset to NOTBUSY
-                if (t <= OPEN3 + 30){
+                if (t <= SystemManager.OPEN3 + 30){
                     offset = NOTBUSY;
 
                 //if within the last 30 minutes of a meal period, set offset to BUSY
-                } else if (t >= CLOSE3 - 30){
+                } else if (t >= SystemManager.CLOSE3 - 30){
                     offset = BUSY;
 
                 //otherwise, middle period is most busy, set offset to VBUSY
@@ -330,17 +289,17 @@ public class SimulationEngine {
         //checks if time lies within an operation time
 
         //in between period 1 and 2
-        if (time >= OPEN1 && time <= CLOSE1){
-            return MEAL1;
+        if (time >= SystemManager.OPEN1 && time <= SystemManager.CLOSE1){
+            return SystemManager.MEAL1;
         }
 
         //in between period 2 and 3
-        if (time <= CLOSE2 && time >= OPEN2){
-            return MEAL2;
+        if (time <= SystemManager.CLOSE2 && time >= SystemManager.OPEN2){
+            return SystemManager.MEAL2;
         }
 
-        if (time >= OPEN3 && time <= CLOSE3){
-            return MEAL3;
+        if (time >= SystemManager.OPEN3 && time <= SystemManager.CLOSE3){
+            return SystemManager.MEAL3;
         }
 
         //outside of meal period
