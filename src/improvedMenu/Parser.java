@@ -19,7 +19,7 @@ public class Parser{
                     if (firstline){firstline=false;
                         continue;}
                     String[] columns=ithline.split(",",-1);
-                    if (columns.length>=3) {
+                    if (columns.length>=3){
                         fooditems.add(columns[2].trim());
                     }
                 }
