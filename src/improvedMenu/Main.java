@@ -4,8 +4,6 @@
 
 package improvedMenu;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 public class Main {
@@ -79,31 +77,29 @@ public class Main {
                     System.out.print("User "+ (i + 1) + ": " + se.userPool.get(i).getId());
                 }
 
-                while (true) { //loops unless user wants to change user accessed
-                    try {
-                        System.out.println("Enter ID to sign in: ");
-                        User currUser = se.userMap.get(in.nextInt());
+                try {
+                    System.out.println("Enter ID to sign in: ");
+                    User currUser = se.userMap.get(in.nextInt());
 
-                        System.out.println("Favorite foods on the menu:");
-                        //TODO: impelment w/ known foods at a current meal period need menu parser
+                    System.out.println("Favorite foods on the menu:");
+                    //TODO: impelment w/ known foods at a current meal period need menu parser
+                    //use mealPeriod variable declared above
 
 
-                        System.out.println("Friends currently in dining hall: ");
-                        for (int f : currUser.getFriends()){
-                            for (ScanEvent s : system.getDiningHall().getPQ()){
-                                //if friend is in line, or occupying dining hall, prints out
-                                if (system.getDiningHall().getPQ().contains(s) || system.getDiningHall().getQ().contains(s)){
-                                    System.out.print("User " + s.getUserId() + ", ");
-                                }
+                    System.out.println("Friends currently in dining hall: ");
+                    for (int f : currUser.getFriends()){
+                        for (ScanEvent s : system.getDiningHall().getPQ()){
+                            //if friend is in line, or occupying dining hall, prints out
+                            if (system.getDiningHall().getPQ().contains(s) || system.getDiningHall().getQ().contains(s)){
+                                System.out.print("User " + s.getUserId() + ", ");
                             }
                         }
-
-                    } catch (InputMismatchException e){
-                        System.out.println("Invalid input");
-                    } catch (NoSuchElementException e){
-                        System.out.println("Invalid input");
                     }
-                    
+
+                } catch (InputMismatchException e){
+                    System.out.println("Invalid input");
+                } catch (NoSuchElementException e){
+                    System.out.println("Invalid input");
                 }
 
                 System.out.println("Do you want to change the date/time (y/n)");

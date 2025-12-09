@@ -4,7 +4,14 @@ import java.util.ArrayList;
 
 //author @Uras1717
 
-//TODO:
+/**TODO: 
+ * break up the menu in to
+    allfood items  (AL)
+    and then be able to return all the items on a particular day by reading the file and putting 
+    those necessary items into an AL which is returned.
+ */
+
+//TODO: need to look at menu.csv NOT frary_menu_extended
 public class MenuParser{
     private ArrayList<String> fooditems;
     public MenuParser(String samplefilename){
