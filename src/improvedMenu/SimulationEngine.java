@@ -120,7 +120,8 @@ public class SimulationEngine {
             }
 
             //parser to populate all possible menu items
-            Parser p = new Parser(menu);
+            //TODO: expect this to change
+            MenuParser mp = new MenuParser(menu);
             allFoods = p.getItems();
 
             //adding favorite foods 

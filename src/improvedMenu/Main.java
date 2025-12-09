@@ -4,12 +4,22 @@
 
 package improvedMenu;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
 
+        String menupath = "./frary_menu_extended.csv";
+
+        //generates new scan data and users
+        SimulationEngine se = new SimulationEngine();
+        se.initializeUsers(menupath);
+        se.generateData();
+
+        //input and system manager initialization
         Scanner in = new Scanner(System.in);
         SystemManager system = new SystemManager();
 
@@ -21,7 +31,7 @@ public class Main {
         //main user loop
         while (true){
 
-            //setting day
+            //day of week input
             System.out.print("Enter day of week (1-7): ");
             int day = in.nextInt();
             while (1 > day || day > 7) {
@@ -29,7 +39,7 @@ public class Main {
                 day = in.nextInt();
             }
 
-            //setting hour
+            //hour input
             System.out.print("Enter hour (0-23): ");
             int hour = in.nextInt();
             while (0 > hour || hour > 23) {
@@ -37,7 +47,7 @@ public class Main {
                 hour = in.nextInt();
             }
 
-            //setting minute
+            //minute input
             System.out.print("Enter minute (0,10,20,30,40,50): ");
             int minute = in.nextInt();
             System.out.println(minute);
@@ -46,12 +56,13 @@ public class Main {
                 minute = in.nextInt();
             }
 
-            //getting occupancy and wait time stats and prints
+            //getting occupancy and wait time stats from given input and prints
             system.runSimulation(day, hour, minute);
             int occupancy = system.getOccupancy(day, hour, minute);
             int wait = system.getWaitTime(day, hour, minute);
             String peopleInLine = system.peopleInLine();
             String peopleEating = system.peopleEating();
+            int mealPeriod = se.mealPeriod(hour * 60 + minute); 
 
             System.out.println("\n--- Results ---");
             System.out.println("Estimated occupancy: " + occupancy);
@@ -60,6 +71,38 @@ public class Main {
             System.out.println("People eating: " + peopleEating);
 
             //TODO: USER OUTPUT AND INDIVIDUAL USER STATS
+            while (true) { //loops unless user wants to change the time/day
+                System.out.println("Potential IDs for sign in: ");
+
+                //prints some known IDs to be used to sign in (the amount potential IDs can be changed at will)
+                for (int i = 0; i < 10; i++){
+                    System.out.print("User "+ (i + 1) + ": " + se.userPool.get(i).getId());
+                }
+
+                while (true) { //loops unless user wants to change user accessed
+                    try {
+                        System.out.println("Enter ID to sign in: ");
+                        User currUser = se.userMap.get(in.nextInt());
+
+                        System.out.println("Favorite foods on the menu:");
+                        //TODO: impelment w/ known foods at a current meal period
+
+                    } catch (InputMismatchException e){
+                        System.out.println("Invalid input");
+                    } catch (NoSuchElementException e){
+                        System.out.println("Invalid input");
+                    }
+                    
+                }
+
+                System.out.println("Do you want to change the date/time (y/n)");
+
+                //user wants to change date, breaks out of inner loop
+                if (in.nextLine().toLowerCase().equals("y")){
+                    break;
+                }
+            }
+            
 
 
         }

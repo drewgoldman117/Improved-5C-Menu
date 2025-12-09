@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 //author @Uras1717
 
-public class Parser{
+//TODO:
+public class MenuParser{
     private ArrayList<String> fooditems;
-    public Parser(String samplefilename){
+    public MenuParser(String samplefilename){
         fooditems=new ArrayList<>();
         File thedatafile = new File(samplefilename);
         if (!thedatafile.exists()){thedatafile = new File("data/"+samplefilename);}
@@ -30,7 +31,7 @@ public class Parser{
     public ArrayList<String> getItems(){return fooditems;}
 
     public static void main(String[] args){
-        Parser parser = new Parser("frary_menu_extended.csv");
+        MenuParser parser = new MenuParser("frary_menu_extended.csv");
         System.out.println("Food items in the file:");
         for (String item:parser.getItems()){
             System.out.println(item);
