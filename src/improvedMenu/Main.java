@@ -28,7 +28,7 @@ public class Main {
 
         //main user loop
         while (true){
-            try{
+
                 //day of week input
                 System.out.print("Enter day of week (1-7): ");
                 int day = in.nextInt();
@@ -80,7 +80,7 @@ public class Main {
                     }
                     System.out.println(); //formatting line
 
-                    try {
+                    try{
                         System.out.println("Enter ID to sign in: ");
                         User currUser = se.userMap.get(in.nextInt());
 
@@ -108,27 +108,49 @@ public class Main {
                                     System.out.print("User " + s.getUserId() + ", ");
                                 }
                             }
+                        
                         }
+                        
+                    }catch (NullPointerException e) {
+                        System.out.println("User not found");
+                    } catch (InputMismatchException e){
+                        System.out.println("Input must be an integer");
+                    }
 
-                    } catch (NullPointerException e){
-                        System.out.println("User does not exist");
-                        continue;
-                    } 
+                    
 
                     System.out.println(); //formatting line
-                    System.out.println("Do you want to change the date/time or quit (y/n)");
 
+                    //TODO: fix this exit logic (both this loop and other one marked
+
+                    System.out.println("Do you want to change the date/time or quit (y/n)");
                     String exitString = in.nextLine();
-                    //user terminates loop and can change date or quit
-                    //TODO: create exit logic
+
+                    if (exitString.toLowerCase().equals("y")){ //exits loop
+                        break;
+                    }
+                    
+                    while(!(exitString.toLowerCase().equals("y")) && !(exitString.toLowerCase().equals("n"))){ //exits once user has valid input
+                        System.out.println("Invalid input; retry");
+                        exitString = in.nextLine();
+                    } 
                 }
                 
+
+                //TODO also this exit logic
+                in.nextLine(); //clears in
+
                 System.out.println("Quit (y/n)");
                 String exitString = in.nextLine();
-                //TODO: create exit logic
-            } catch (InputMismatchException e){
-                System.out.println("Invalid input type");
-            }           
+                
+                while(!(exitString.toLowerCase().equals("y")) && !(exitString.toLowerCase().equals("n"))){ //exits once user has valid input
+                    System.out.println("Invalid input; retry");
+                    exitString = in.nextLine();
+                } 
+
+                if (exitString.toLowerCase().equals("y")){
+                    break;
+                }        
         }
 
         in.close();
