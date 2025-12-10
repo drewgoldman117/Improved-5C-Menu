@@ -26,8 +26,10 @@ public class Main {
 
         System.out.println("Welcome to the 5C Wait Time Estimator!");
 
+        String exitString; //for exit logic
+
         //main user loop
-        while (true){
+        do {
 
                 //day of week input
                 System.out.print("Enter day of week (1-7): ");
@@ -70,7 +72,7 @@ public class Main {
                 //System.out.println("People eating: " + peopleEating);
 
                 //TODO: USER OUTPUT AND INDIVIDUAL USER STATS
-                while (true) { //loops unless user wants to change the time/day
+                do { //loops unless user wants to change the time/day
                     System.out.println("Potential IDs for sign in: ");
 
                     //TODO: should we print out only those within the dining hall? y/n?
@@ -120,38 +122,31 @@ public class Main {
                     
 
                     System.out.println(); //formatting line
-
-                    //TODO: fix this exit logic (both this loop and other one marked
-
+                    in.nextLine(); //clears input
+                   
                     System.out.println("Do you want to change the date/time or quit (y/n)");
-                    String exitString = in.nextLine();
-
-                    if (exitString.toLowerCase().equals("y")){ //exits loop
-                        break;
-                    }
-                    
-                    while(!(exitString.toLowerCase().equals("y")) && !(exitString.toLowerCase().equals("n"))){ //exits once user has valid input
-                        System.out.println("Invalid input; retry");
-                        exitString = in.nextLine();
-                    } 
-                }
-                
-
-                //TODO also this exit logic
-                in.nextLine(); //clears in
-
-                System.out.println("Quit (y/n)");
-                String exitString = in.nextLine();
-                
-                while(!(exitString.toLowerCase().equals("y")) && !(exitString.toLowerCase().equals("n"))){ //exits once user has valid input
-                    System.out.println("Invalid input; retry");
                     exitString = in.nextLine();
-                } 
 
-                if (exitString.toLowerCase().equals("y")){
-                    break;
-                }        
-        }
+
+                    //checks valid input
+                    while (!exitString.equalsIgnoreCase("y") && !exitString.equalsIgnoreCase("n")){
+                        System.out.println("Invalid, please input y or n");
+                        exitString = in.nextLine();
+                    }
+
+                } while (!exitString.equalsIgnoreCase("y")); //exits loop if exit string is yes
+
+                    System.out.println("Quit (y/n)");
+                    exitString = in.nextLine();
+
+                    //checks valid input
+                    while (!exitString.equalsIgnoreCase("y") && !exitString.equalsIgnoreCase("n")){
+                        System.out.println("Invalid, please input y or n");
+                        exitString = in.nextLine();
+                    }
+
+                }while (!exitString.equalsIgnoreCase("y")); //exits loop if exit string is yes
+        
 
         in.close();
         
