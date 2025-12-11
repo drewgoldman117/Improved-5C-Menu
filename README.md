@@ -47,9 +47,9 @@ The engine under the app and the calcuations is within the file SimulationEngine
 **ID** creation is based off of the *student population* with IDs being selected from 1 -> max population
 
 #### Alterations in SystemManager.java
-**These times MUST be inputted as minutes with 0 being the opening time**
+*These times MUST be inputted as minutes with 0 being the opening time*
 
-**If the times are altered, the OPENTIMEOFFSET must also be corrected**
+*If the times are altered, the OPENTIMEOFFSET must also be corrected*
 ![Static Variables - SystemManager](readmeimages/staticvarssystemmanager.png)
 
 #### Alterations in SimulationEngine.java
