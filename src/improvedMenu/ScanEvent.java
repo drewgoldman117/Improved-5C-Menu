@@ -41,7 +41,7 @@ public class ScanEvent {
 
 
     @Override
-    //outputs string value of the scan event
+    //outputs string representation of the scan event
     public String toString() {
         if (minute >= 10){
             return "[" + userId + " at " + hour + ":" + minute + "]";
