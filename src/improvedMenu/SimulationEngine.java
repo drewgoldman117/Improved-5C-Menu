@@ -31,6 +31,7 @@ public class SimulationEngine {
     protected HashMap<Integer, User> userMap; //store users for main method use
     
 
+    //constructor
     public SimulationEngine() {
         this.rand = new Random();
         this.scansPerDay = new HashMap<>();
@@ -79,9 +80,11 @@ public class SimulationEngine {
             }
 
             //parser to populate all possible menu items
-            //TODO: expect this to change
             MenuParser mp = new MenuParser(menu);
-            allFoods = mp.getItems();
+            allFoods = mp.getAllFoodItems();
+
+            //for testing //TODO COMMENT OUT
+            currUser.addFavFood("Pancakes");
 
             //adding favorite foods 
             for (int f = 0; f <= rand.nextInt(FOODMAX); f++){
@@ -338,10 +341,14 @@ public class SimulationEngine {
         //testing generating data for the csv
         SimulationEngine se = new SimulationEngine();
 
-        String menupath = "./frary_menu_extended.csv";
+        String menupath = "./menu.csv";
 
         se.initializeUsers(menupath);
 
         se.generateData();
+
+        for (User u : se.userPool){
+            System.out.println(u);
+        }
     }
 }

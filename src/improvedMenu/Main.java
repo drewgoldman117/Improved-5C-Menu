@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String menupath = "./frary_menu_extended.csv";
+        String menupath = "./menu.csv";
 
         //generates new scan data and users
         SimulationEngine se = new SimulationEngine();
@@ -40,10 +40,10 @@ public class Main {
                 }
 
                 //hour input
-                System.out.print("Enter hour of operation (1-12): ");
-                int hour = in.nextInt() - 1;
-                while (0 > hour || hour > 11) {
-                    System.out.print("Input has to be an integer between 1-12 ");
+                System.out.print("Enter hour of day (0-23): ");
+                int hour = in.nextInt();
+                while (0 > hour || hour > 23) {
+                    System.out.print("Input has to be an integer between 0-23 ");
                     hour = in.nextInt();
                 }
 
@@ -68,10 +68,14 @@ public class Main {
                 System.out.println("\n--- Results ---");
                 System.out.println("Occupancy: " + occupancy);
                 System.out.println("Estimated wait time: " + wait + " minutes");
-                //System.out.println("People in line (not in order): " + peopleInLine);
-                //System.out.println("People eating: " + peopleEating);
+                System.out.println("People in line (not in order): " + peopleInLine);
+                System.out.println("People eating: " + peopleEating);
 
-                //TODO: USER OUTPUT AND INDIVIDUAL USER STATS
+                //creating menu parser object to access menu
+                MenuParser mp = new MenuParser(menupath);
+
+
+                //TODO: USER OUTPUT AND INDIVIDUAL USER STATS FOOD PART YET TO BE DONE
                 do { //loops unless user wants to change the time/day
                     System.out.println("Potential IDs for sign in: ");
 
@@ -86,13 +90,20 @@ public class Main {
                         System.out.println("Enter ID to sign in: ");
                         User currUser = se.userMap.get(in.nextInt());
 
-                        if (currUser == null){
+                        if (currUser == null){//user not found
                             throw new NullPointerException();
                         }
 
                         System.out.println("Favorite foods on the menu:");
-                        //TODO: impelment w/ known foods at a current meal period need menu parser
+                        //TODO: need to test this implementation
                         //use mealPeriod variable declared above
+                        for (String s : mp.getItemsForDay(day, se.mealPeriod((hour * 60 + minute) - SystemManager.SEVENTHIRTYOFFSET))){ //gets meal items for that period, offset by minutes at 730
+                            if (currUser.getFoods().contains(s)){
+                                System.out.print(s + ", ");
+                            }
+                        }
+
+                        System.out.println(); //formatting line
 
 
                         System.out.print("Friends currently in dining hall: ");
