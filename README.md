@@ -47,12 +47,12 @@ The engine under the app and the calcuations is within the file SimulationEngine
 **ID** creation is based off of the *student population* with IDs being selected from 1 -> max population
 
 #### Alterations in SystemManager.java
-==These times **MUST** be inputted as minutes with 0 being the opening time== 
-==If the times are altered, the **OPENTIMEOFFSET** must also be corrected==
+**These times MUST be inputted as minutes with 0 being the opening time**
+**If the times are altered, the OPENTIMEOFFSET must also be corrected**
 ![Static Variables - SystemManager](readmeimages/staticvarssystemmanager.png)
 
 #### Alterations in SimulationEngine.java
-==The busyness offsets can be used to correct unusual flow in the data set==
+**The busyness offsets can be used to correct unusual flow in the data set**
 * We assume the first ~30 minutes of the meal period is less busy 
     * NOTBUSY offset used
 * Middle most busy
