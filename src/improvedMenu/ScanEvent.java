@@ -1,4 +1,6 @@
-//TODO: Add authors!
+/**
+ * @authors @ryokasai19 @drewgoldman117
+ */
 
 package improvedMenu;
 
@@ -7,13 +9,10 @@ public class ScanEvent {
     public int hour;
     public int minute;
     public int userId;
-    // added by Ryo for DiningHall.java. Lmk if you have questions
     public int enteringTime;
     public int duration;
     public int leavingTime;
 
-    //TODO add back if needed
-    private int openOffset = 450; //offsets the entering time in minutes to start at 0 when time is 07:30
 
     public ScanEvent(int d, int h, int m, int u) {
         this.day = d;
@@ -42,8 +41,12 @@ public class ScanEvent {
 
 
     @Override
+    //outputs string value of the scan event
     public String toString() {
-        // This will print: [487 at 7:00]
-        return "[" + userId + " at " + hour + ":" + minute + "]";
+        if (minute >= 10){
+            return "[" + userId + " at " + hour + ":" + minute + "]";
+        }
+        //maintains HH:MM format
+        return "[" + userId + " at " + hour + ":" + "0" + minute + "]";
     }
 }

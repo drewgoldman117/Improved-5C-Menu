@@ -93,7 +93,7 @@ public class User {
             foods += s + ", ";
         }
 
-        return "|User " + id + "\n|Foods: " + foods + "\n|Friends: " + friends;
+        return "|User " + id + "\n|Foods: " + foods + "\n|Friends: " + friends + "\n|";
     }
 
     //user testing

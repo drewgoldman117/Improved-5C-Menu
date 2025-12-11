@@ -1,6 +1,3 @@
-//TODO: add authors
-//TODO: add constants to avoid magic numbers
-
 /**
  * @author @ghoney47 @drewgoldman117
  */
@@ -31,7 +28,7 @@ public class SystemManager {
     protected static final int MEAL2 = 2;
     protected static final int MEAL3 = 3;
 
-    //----Times must be inputted as minutes, minute 0 intial opening time----//
+    //----Times must be inputted as minutes here, minute 0 intial opening time----//
 
     //opening time for meal period 1 in minutes (07:30)
     protected static final int OPEN1 = 0;

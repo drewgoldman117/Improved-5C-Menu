@@ -10,7 +10,7 @@ import java.util.*;
 
 public class SimulationEngine {
 
-    //busyness offsets
+    //busyness offsets (add or subtract people)
     private static final int NOTBUSY = 10;
     private static final int BUSY = 15;
     private static final int VBUSY = 25;
@@ -77,6 +77,11 @@ public class SimulationEngine {
                 }
                 
                 currUser.addFriend(randFriend.getId());
+
+                //adding friends bidirectionally
+                if (!randFriend.getFriends().contains(currUser.getId())){
+                    randFriend.addFriend(currUser.getId());
+                }
             }
 
             //parser to populate all possible menu items
@@ -158,6 +163,10 @@ public class SimulationEngine {
      * @param dayScan ArrayList of scan events for that day
      */
     private void addScans(ArrayList<ScanEvent> dayScan, ArrayList<User> mealPeriodUsers, int amount, int t, int d){
+        //for testing
+        //dayScan.add(new ScanEvent(d, 7, 35, userPool.get(0).getId()));
+
+
         for (int i = 0; i < amount; i++){
 
             //pulling random user from pool

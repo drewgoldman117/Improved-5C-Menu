@@ -1,5 +1,6 @@
-//TODO: add authors!!!
-
+/**
+ * @author @ryokasai19
+ */
 package improvedMenu;
 
 import java.io.*;
@@ -147,6 +148,8 @@ public class DiningHall {
         return lineQueue;
     }
 
+
+    //for testing
     public static void main(String[] args) {
         DiningHall test = new DiningHall();
         test.loadData("data/generated_scans.csv");

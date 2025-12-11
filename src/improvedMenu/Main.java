@@ -50,7 +50,7 @@ public class Main {
                 //minute input
                 System.out.print("Enter minute 0-59: ");
                 int minute = in.nextInt();
-                System.out.println(minute);
+                //System.out.println(minute);
                 while (minute < 0 || minute >= 60) {
                     System.out.print("Input has to be 0-59");
                     minute = in.nextInt();
@@ -63,11 +63,13 @@ public class Main {
                 int wait = system.getWaitTime(day, hour, minute);
                 String peopleInLine = system.peopleInLine();
                 String peopleEating = system.peopleEating();
-                int mealPeriod = se.mealPeriod(hour * 60 + minute); 
+                int mealPeriod = se.mealPeriod((hour * 60 + minute) - SystemManager.OPENTIMEOFFSET); //gets meal period, uses offset to set open time as 0 minutes
 
                 System.out.println("\n--- Results ---");
                 System.out.println("Occupancy: " + occupancy);
                 System.out.println("Estimated wait time: " + wait + " minutes");
+
+               
                 System.out.println("People in line (not in order): " + peopleInLine);
                 System.out.println("People eating: " + peopleEating);
 
@@ -94,10 +96,10 @@ public class Main {
                             throw new NullPointerException();
                         }
 
-                        System.out.println("Favorite foods on the menu:");
+                        System.out.print("Favorite foods on the menu:");
                         //TODO: need to test this implementation
                         //use mealPeriod variable declared above
-                        for (String s : mp.getItemsForDay(day, se.mealPeriod((hour * 60 + minute) - SystemManager.OPENTIMEOFFSET))){ //gets meal items for that period, offset by minutes at 730
+                        for (String s : mp.getItemsForDay(day, mealPeriod)){ //gets meal items for that period, offset by minutes at 730
                             if (currUser.getFoods().contains(s)){
                                 System.out.print(s + ", ");
                             }
