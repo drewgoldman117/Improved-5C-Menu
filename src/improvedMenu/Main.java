@@ -1,13 +1,21 @@
-/**
- * @author @ghoney47 @ryokasai19
- */
-
 package improvedMenu;
 
 import java.util.*;
 
+
+/**
+ * This is the main which runs our entire project.
+ * Handles user interactions, loads data, estimates dining hall occupancy, wait times, friend presence, and food recomendations.
+ *
+ * @author @ghoney47 @ryokasai19
+ */
+
 public class Main {
 
+    /**
+     * Includes the full simulation and UI.
+     * @param args
+     */
     public static void main(String[] args) {
 
         String menupath = "./menu.csv";
