@@ -293,11 +293,11 @@ public class SimulationEngine {
         return flowRate + offset;
     }
 
-    /** checks if time is in operating hours
-     * @param t int time input in minutes
+    /** Determines meal period (-1 if none)
+     * @param time int time input in minutes
      * @return int that specifies the meal period
      */
-    protected int mealPeriod(int time){
+    public int mealPeriod(int time){
         //checks if time lies within an operation time
 
         //in between period 1 and 2

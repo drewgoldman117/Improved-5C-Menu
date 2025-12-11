@@ -4,12 +4,9 @@
 
 package improvedMenu;
 
-import java.util.ArrayList;
-
 public class SystemManager {
 
     private DiningHall diningHall;
-    protected static ArrayList<String> fullMenu; // to be accessed across package
     // to keep track latest data
     private int[] occupancyInfo = { 0, 0, 0 };
 
@@ -59,10 +56,6 @@ public class SystemManager {
 
     public SystemManager() {
         diningHall = new DiningHall();
-    }
-
-    public void loadFullMenu (String menuPath){
-        //TODO: call menu parser here!!!
     }
 
     // load the scan dataset

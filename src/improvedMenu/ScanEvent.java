@@ -5,13 +5,13 @@
 package improvedMenu;
 
 public class ScanEvent {
-    public int day;
-    public int hour;
-    public int minute;
-    public int userId;
-    public int enteringTime;
-    public int duration;
-    public int leavingTime;
+    protected int day;
+    protected int hour;
+    protected int minute;
+    protected int userId;
+    protected int enteringTime;
+    protected int duration;
+    protected int leavingTime;
 
 
     public ScanEvent(int d, int h, int m, int u) {

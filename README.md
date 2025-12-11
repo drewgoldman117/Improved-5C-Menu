@@ -53,6 +53,14 @@ The engine under the app and the calcuations is within the file SimulationEngine
 
 #### Alterations in SimulationEngine.java
 ==The busyness offsets can be used to correct unusual flow in the data set==
+* We assume the first ~30 minutes of the meal period is less busy 
+    * NOTBUSY offset used
+* Middle most busy
+    * VBUSY offset used
+* Last ~30 minutes is slightly busy
+    * BUSY offset used
+
+*Offsets are randomly subtracted or added to a base flow => maximum occupany / minutes of operation*
 ![[./readmeimages/staticvarssimengine.png]]
 
 ## Data Format
@@ -128,10 +136,101 @@ public ArrayList<String> getItemsForDay(int whatdayisit,int whatnomealisit)
 * Takes input of day and meal period number to return the list of item names in that meal period
 
 #### ScanEvent.java
+```java
+public ScanEvent (int d, int h, int m, int u)
+```
+* Constructor takes day, hour, minute, and user ID as input.
+* Populates instance variables with the above information, and calculates an *enteringTime* to be used in the wait time and occupancy calculations
+
+```java
+public int getDay()
+```
+
+* Returns what day (1-7)
+
+```java
+public int getTime()
+```
+
+* Returns the time (in minutes) the event occured
+
+```java
+public int getUserId()
+```
+
+* Returns the user ID of the scan event (who scanned in)
+
+```java
+public String toString()
+```
+
+* Returns a string representation of the Scan
 
 #### SimulationEngine.java
+```java
+public SimulationEngine()
+```
+* Zero parameter constructor intializes instance variables with empty data structures
+
+```java
+public void intializeUsers(String menu)
+```
+* Generates user pool, friends, and favorite foods to grab from for simulated scans
+* Parameter menu is the string filepath of the file to be read
+
+```java
+public void generateData()
+```
+
+* Generates a week worth of scan data for each day and meal period, writes to a (specified) CSV for use
+
+```java
+public int mealPeriod(int time)
+```
+
+* Determines meal period (returns -1 if out of a meal period)
+* Time input in minutes
+* Returns integer that specifies the meal period
+
+```java
+public Map<Integer, ArrayList<ScanEvent>> getAllScanData()
+```
+
+* Returns maps of all simulated data
+
+```java
+public void saveToCSV(String filename)
+```
+
+* Writes all scan data to a CSV
+* Parameter filename is the CSV to write to
 
 #### SystemManager.java
+
+```java
+public SystemManager()
+```
+
+* Zero parameter constructor creates a new DiningHall object
+
+```java
+public void loadScanData(String filename)
+```
+
+* Loads scan data into dining hall object
+
+```java
+public void runSimulation(int day, int hour, int minute)
+```
+
+* Runs the Occupancy calculations and updates occupancyInfo
+
+```java
+public DiningHall getDiningHall()
+```
+
+* Returns the dining hall object in use
+
 
 #### User.java
 
