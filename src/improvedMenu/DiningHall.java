@@ -1,25 +1,43 @@
-/**
- * @author @ryokasai19
- */
 package improvedMenu;
 
 import java.io.*;
 import java.util.*;
 
+
+/**
+ * Represents a dining hall simulation that loads the sample scan events, determines how occupied the dining hall is and therefore estimates waiting times, and categorizes events by day.
+ * 
+ * @author @ryokasai19
+ */
 public class DiningHall {
 
+    //list of all scanned events from the CSV file
     private ArrayList<ScanEvent> events;
+
+    //this maps from day number to all ScanEvent(s) on that day
     private Map<Integer, ArrayList<ScanEvent>> dayToEvents;
 
+    //queue which represents people in line, not yet served
     private Queue<ScanEvent> lineQueue;
+
+    //priority queue ordering by leaving time of the people who have already sat down
     private PriorityQueue<ScanEvent> seatingPq;
 
+
+    /**
+     * DiningHall initializes events and dayToEvents as an arraylist and hashmap, but does not do anything yet.
+     * This is to create a simulation object.
+     */
     public DiningHall() {
         this.events = new ArrayList<>();
         this.dayToEvents = new HashMap<>();
     }
 
-    // Load CSV scan data
+    /**
+     * Loads scan event data from a CSV file.
+     * The file contains day, minute, hour, userId and using this automatically assigns the meal period and stay durations.
+     * @param filename the CSV file we're loading
+     */
     public void loadData(String filename) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename));
@@ -59,19 +77,30 @@ public class DiningHall {
         }
     }
 
-    // Return all ScanEvents on a specific day
+    /**
+     * Gets all the ScanEvents for the given day
+     *
+     * @param day the given day
+     * @return list of ScanEvents for that given day
+     */
     public ArrayList<ScanEvent> getDayEvents(int day) {
         return dayToEvents.getOrDefault(day, new ArrayList<>());
     }
 
-    // Return random stay time in the dining hall in minutes
-    // Breakfast Average: 28.84, Standard Deviation: 26.86
-    // Lunch Average: 38.92, Standard Deviation: 12.39
-    // Dinner Average: 48.09, Standard Deviation: 15.71
+    /**
+     * Returns random stay durations for dining hall visits. Minimum duration is 10 minutes
+     * @param mealPeriod tells which meal period it is
+     * @return estimated duration spent inside dining hall
+     */
     public int timeSpent(int mealPeriod) {
         Random rand = new Random();
         double mean;
         double stdDev;
+
+        // Return random stay time in the dining hall in minutes
+        // Breakfast Average: 28.84, Standard Deviation: 26.86
+        // Lunch Average: 38.92, Standard Deviation: 12.39
+        // Dinner Average: 48.09, Standard Deviation: 15.71
         if (mealPeriod == SystemManager.MEAL1) {
             mean = 28.84;
             stdDev = 26.86;
@@ -87,7 +116,14 @@ public class DiningHall {
         return rounded;
     }
 
-    // Returns [line size, the number of people eating, wait time]
+    /**
+     * Calculates according to the previous calculations how occupied a dining hall is at a given day
+     * Returns an an array [line size, the number of people eating, wait time]
+     * @param day what day it is
+     * @param hour what hour it is
+     * @param minute what minute it is
+     * @return an an array [line size, the number of people eating, wait time]
+     */
     public int[] getOccupancy(int day, int hour, int minute) {
         ArrayList<ScanEvent> list = dayToEvents.get(day);
         if (list == null)
@@ -133,23 +169,38 @@ public class DiningHall {
         return new int[] { lineQueue.size(), seatingPq.size(), waitTime };
     }
 
+    /**
+     * Estimates wait time based on line volume (how many people are in line) - service duration assumed 1 minute
+     * @param lineVolume the number of people in line
+     * @return estimated wait time in minutes
+     */
     public int getWaitTime(int lineVolume) {
         int serviceDuration = 1;
         return serviceDuration * lineVolume;
     }
 
-    //returns priority queue
+    /**
+     * Returns a priority queue of people currently seated
+     * @return seating priority queue
+     */
     public PriorityQueue<ScanEvent> getPQ(){
         return seatingPq;
     }
 
-    //returns queue
+    /**
+     * Returns a queue of people currently in line
+     * @return line queue
+     */
     public Queue<ScanEvent> getQ(){
         return lineQueue;
     }
 
 
-    //for testing
+    /**
+     * Test method
+     * Loads a sample data, generated_scans.csv, and prints occupancy details for day 1, hour 7, minute 50.
+     * @param args
+     */
     public static void main(String[] args) {
         DiningHall test = new DiningHall();
         test.loadData("data/generated_scans.csv");
