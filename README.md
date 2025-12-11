@@ -48,6 +48,7 @@ The engine under the app and the calcuations is within the file SimulationEngine
 
 #### Alterations in SystemManager.java
 **These times MUST be inputted as minutes with 0 being the opening time**
+
 **If the times are altered, the OPENTIMEOFFSET must also be corrected**
 ![Static Variables - SystemManager](readmeimages/staticvarssystemmanager.png)
 
