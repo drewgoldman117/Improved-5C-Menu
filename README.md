@@ -122,19 +122,19 @@ public Queue<ScanEvent> getQ()
 public MenuParser(String menusamplefilename)
 ```
 
-* Creates MenuParser Object with an input of the menu file path (CSV) that parses the CSV into an ArrayList of each row, and also one of all food items
+* Creates MenuParser Object with an input of the menu file path (CSV) that parses the CSV into an ArrayList of each row, and also one of all food items. The output can be all food items or food items specific to a meal period in a given day.
 
 ```java
 public ArrayList<String> getAllFoodItems()
 ```
 
-* Returns all the food item names contained in the file
+* Returns all the food item names contained in the file, default of menu.csv.
 
 ```java
 public ArrayList<String> getItemsForDay(int whatdayisit,int whatnomealisit)
 ```
 
-* Takes input of day and meal period number to return the list of item names in that meal period
+* Takes input of day and meal period number to return the list of item names in that meal given period.
 
 #### ScanEvent.java
 ```java
