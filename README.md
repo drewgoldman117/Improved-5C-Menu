@@ -15,7 +15,7 @@ The Improved 5C Menu is a small scale (but scalable!) look into what a 5C menu a
 For our scale (and because we were unable to access live dining hall scan data) we decided to make our program a simulation of these features. Thus, per run of the main, we simulate a week's worth of scan data and give sample outputs for any user that was generated!
 
 #### Sample Output:
-![[readmeimages/sampleoutput1.png]]
+![Output] (readmeimages/sampleoutput1.png)
 As seen in the output, the data generation is confirmed, then the **welcome message** is outputed. 
 
 If *n* was inputted in the "Do you want to change..." then another user ID could be inputed at that same time and date.
@@ -49,7 +49,7 @@ The engine under the app and the calcuations is within the file SimulationEngine
 #### Alterations in SystemManager.java
 ==These times **MUST** be inputted as minutes with 0 being the opening time== 
 ==If the times are altered, the **OPENTIMEOFFSET** must also be corrected==
-![[readmeimages/staticvarssystemmanager.png]]
+!(readmeimages/staticvarssystemmanager.png)
 
 #### Alterations in SimulationEngine.java
 ==The busyness offsets can be used to correct unusual flow in the data set==
@@ -61,7 +61,7 @@ The engine under the app and the calcuations is within the file SimulationEngine
     * BUSY offset used
 
 *Offsets are randomly subtracted or added to a base flow => maximum occupany / minutes of operation*
-![[readmeimages/staticvarssimengine.png]]
+!(readmeimages/staticvarssimengine.png)
 
 ## Data Format
 
@@ -231,6 +231,94 @@ public DiningHall getDiningHall()
 
 * Returns the dining hall object in use
 
+```java
+public int getOccupancy(int day, int hour, int minute)
+```
+
+* Returns integer of occupants
+
+```java
+public int getWaitTime(int day, int hour, int minute)
+```
+
+* Returns integer of wait time
+
+```java
+public String peopleInLine()
+```
+
+* Returns String of all people currently in the line
+
+```java
+public String peopleEating()
+```
+
+* Returns String of all people currently occupying (eating in) the dining hall
 
 #### User.java
 
+```java
+public User(int id)
+```
+
+* Constructor that only specifies id
+* Creates blank user other than ID
+
+```java
+public User(int id, ArrayList<Integer> friends, ArrayList<String> foods)
+```
+
+* Secondary constructor (mostly for testing)
+* Intializes all values with inputs
+
+```java
+public int getId()
+```
+
+* Returns ID number of user
+
+```java
+public ArrayList<Integer> getFriends()
+```
+
+* Returns ArrayList of friend Integer IDs
+
+```java
+public ArrayList<String> getFoods()
+```
+
+* Returns ArrayList of favorite food strings
+
+```java
+public void addFavFood(String food)
+```
+
+* Adds favorite food to user
+* Parameter food is the string of the food to be added
+
+```java
+public void addFriend(int id)
+```
+
+* Adds new friend integer id to list
+* Parameter id is the integer to be added
+
+```java
+public int hashCode()
+```
+
+* Hashes objects based on ID number
+* Returns integer for hashing
+
+```java
+public boolean equals(Object o)
+```
+
+* Returns boolean if the object is equal to the user
+* equality determined based on user ID
+
+```java
+public String toString()
+``` 
+
+* String representation of a User object

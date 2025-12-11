@@ -27,23 +27,29 @@ public class User {
 
     //--- getters and setters ---//
     
-    //returns id number
+    /**
+     * @return integer ID
+     */
     public int getId() {
         return id;
     }
 
-    //return friends arraylist
+    /**
+     * @return ArrayList of friend Integer IDs
+     */
     public ArrayList<Integer> getFriends(){
         return friends;
     }
 
-    //return favorite foods arraylist
+    /**
+     * @return ArrayList of favorite food strings
+     */
     public ArrayList<String> getFoods(){
         return favFoods;
     }
 
-    //adds favorite food to user, confirmation written in console
-    /**
+    
+    /**adds favorite food to user
      * @param food string of food to be added
      */
     public void addFavFood(String food){
