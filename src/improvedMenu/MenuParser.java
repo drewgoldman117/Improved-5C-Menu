@@ -7,7 +7,6 @@ package improvedMenu;
 import java.io.*;
 import java.util.ArrayList;
 
-
 /** 
  * The MenuParser class is to parse menu.csv and store food items from there in arraylists, provide methods to access them both for all items or just items for one specific meal period.
  */
