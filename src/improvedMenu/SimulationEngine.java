@@ -83,8 +83,8 @@ public class SimulationEngine {
             MenuParser mp = new MenuParser(menu);
             allFoods = mp.getAllFoodItems();
 
-            //for testing //TODO COMMENT OUT
-            currUser.addFavFood("Pancakes");
+            //for testing
+            //currUser.addFavFood("Pancakes");
 
             //adding favorite foods 
             for (int f = 0; f <= rand.nextInt(FOODMAX); f++){

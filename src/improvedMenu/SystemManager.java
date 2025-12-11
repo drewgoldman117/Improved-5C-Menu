@@ -58,7 +58,7 @@ public class SystemManager {
     protected static final int STUDENTPOP = 1766;
 
     //07:30 minute equivalent for offsetting regular time to be minutes
-    protected static final int SEVENTHIRTYOFFSET = 450;
+    protected static final int OPENTIMEOFFSET = 450;
 
     public SystemManager() {
         diningHall = new DiningHall();

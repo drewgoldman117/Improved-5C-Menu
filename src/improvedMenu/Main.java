@@ -97,7 +97,7 @@ public class Main {
                         System.out.println("Favorite foods on the menu:");
                         //TODO: need to test this implementation
                         //use mealPeriod variable declared above
-                        for (String s : mp.getItemsForDay(day, se.mealPeriod((hour * 60 + minute) - SystemManager.SEVENTHIRTYOFFSET))){ //gets meal items for that period, offset by minutes at 730
+                        for (String s : mp.getItemsForDay(day, se.mealPeriod((hour * 60 + minute) - SystemManager.OPENTIMEOFFSET))){ //gets meal items for that period, offset by minutes at 730
                             if (currUser.getFoods().contains(s)){
                                 System.out.print(s + ", ");
                             }
