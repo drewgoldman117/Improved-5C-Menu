@@ -15,7 +15,7 @@ The Improved 5C Menu is a small scale (but scalable!) look into what a 5C menu a
 For our scale (and because we were unable to access live dining hall scan data) we decided to make our program a simulation of these features. Thus, per run of the main, we simulate a week's worth of scan data and give sample outputs for any user that was generated!
 
 #### Sample Output:
-![[./readmeimages/sampleoutput1.png]]
+![[readmeimages/sampleoutput1.png]]
 As seen in the output, the data generation is confirmed, then the **welcome message** is outputed. 
 
 If *n* was inputted in the "Do you want to change..." then another user ID could be inputed at that same time and date.
@@ -48,8 +48,8 @@ The engine under the app and the calcuations is within the file SimulationEngine
 
 #### Alterations in SystemManager.java
 ==These times **MUST** be inputted as minutes with 0 being the opening time== 
-==If the times are altered, the **OPENTIMEOFFSET** must also be corrected== 
-![[./readmeimages/staticvarssystemmanager.png]]
+==If the times are altered, the **OPENTIMEOFFSET** must also be corrected==
+![[readmeimages/staticvarssystemmanager.png]]
 
 #### Alterations in SimulationEngine.java
 ==The busyness offsets can be used to correct unusual flow in the data set==
@@ -61,7 +61,7 @@ The engine under the app and the calcuations is within the file SimulationEngine
     * BUSY offset used
 
 *Offsets are randomly subtracted or added to a base flow => maximum occupany / minutes of operation*
-![[./readmeimages/staticvarssimengine.png]]
+![[readmeimages/staticvarssimengine.png]]
 
 ## Data Format
 
