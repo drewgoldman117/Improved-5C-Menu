@@ -1,9 +1,15 @@
 /**
- * @author @ghoney47 @drewgoldman117
+ * @authors @ghoney47 @drewgoldman117 @Uras1717
  */
 
 package improvedMenu;
 
+/**
+ * This class mostly interacts with the DiningHall class to manage the overall system.
+ * It loads in the scan data, runs simulations and thus provides occupancy info and wait time info.
+ *
+ * @authors @ghoney47 @drewgoldman117 @Uras1717
+ */
 public class SystemManager {
 
     private DiningHall diningHall;
@@ -54,39 +60,71 @@ public class SystemManager {
     //07:30 minute equivalent for offsetting regular time to be minutes
     protected static final int OPENTIMEOFFSET = 450;
 
+
+    /**
+     * Constructing a new SystemManager object
+     */
     public SystemManager() {
         diningHall = new DiningHall();
     }
 
-    // load the scan dataset
+    /**
+     * Loading the scan event data from the CSV file
+     * @param filename path to CSV file
+     */
     public void loadScanData(String filename) {
         diningHall.loadData(filename);
     }
 
-    // run simulation and update occupancyInfo
+    /**
+     * This method takes in day, hour, minute, and runs occupancy simulation for these timestamps.
+     * @param day day
+     * @param hour hour
+     * @param minute minute
+     */
     public void runSimulation(int day, int hour, int minute) {
         this.occupancyInfo = diningHall.getOccupancy(day, hour, minute);
     }
 
-    //returns dining hall object in use
+    /**
+     * @return dining hall object in use
+     */
     public DiningHall getDiningHall(){
         return diningHall;
     }
 
-    // wrapper for occupancy
+    /**
+     * This method is the wrapper for occupancy
+     * @param day day
+     * @param hour hour
+     * @param minute minute
+     * @return number of peiple in the dining hall at that timestamp
+     */
     public int getOccupancy(int day, int hour, int minute) {
         return occupancyInfo[1];
     }
 
-    // wrapper for wait time
+    /**
+     * This method is the wrapper for wait time
+     * @param day day
+     * @param hour hour
+     * @param minute minute
+     * @return wait time in minutes
+     */
     public int getWaitTime(int day, int hour, int minute) {
         return occupancyInfo[2];
     }
 
+    /**
+     * @return a str of everyone in line
+     */
     public String peopleInLine() {
         return diningHall.getQ().toString();
     }
 
+    /**
+     * @return a str of everyone eating
+     */
     public String peopleEating() {
         return diningHall.getPQ().toString();
     }
