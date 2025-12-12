@@ -1,8 +1,10 @@
 /**
+ * This class generates syntethic dining hall data for one week, which we then use for sumulating user behavior, dining hall occupancy and wait times.
+ * We feed data into other classes for analysis too.
+ * This class also initializes a group of users with randomly generated friends and favorite food items.
+ * Also, time must be inputted in terms of minutes in this class.
  * @author @ghoney47
- *
  */
-//times must be inputted as minutes
 package improvedMenu;
 
 import java.io.FileWriter;
@@ -30,8 +32,9 @@ public class SimulationEngine {
     protected ArrayList<User> userPool; //stores users for generation
     protected HashMap<Integer, User> userMap; //store users for main method use
     
-
-    //constructor
+    /**
+     * Constructor for a new SimulationEngine; empty hashmaps, random, and arraylists initialized
+     */
     public SimulationEngine() {
         this.rand = new Random();
         this.scansPerDay = new HashMap<>();
@@ -39,13 +42,14 @@ public class SimulationEngine {
         this.userMap = new HashMap<>();
     }
 
-    /**generates user pool, friends, and favorite foods to grab from for simulated scans
+    /**
+     * Generates user pool, friends, and favorite food items to grab from for simulated scans 
      * @param menu string filepath of the file to be read
      */
-
     public void initializeUsers(String menu){
 
-        ArrayList<Integer> idPool = new ArrayList<>();//stores user ids
+        //stores user ids
+        ArrayList<Integer> idPool = new ArrayList<>();
 
         //populating id pool
         for (int i = 0; i < POOLCOUNT; i++){
@@ -118,7 +122,10 @@ public class SimulationEngine {
         }
     }
 
-    //Generates a week worth of scan data for each day and meal period, writes to a CSV for use
+    /**
+     * Generates a week worth of scan data for each day and meal period, writes to a CSV for use, which we set to ./data/generated_scans.csv
+     * Scans are spaced in 10 minute intervals
+     */
     public void generateData() {
         //iterates through all days
         for (int d = SystemManager.MON; d <= SystemManager.SUN; d++){
@@ -154,8 +161,8 @@ public class SimulationEngine {
         saveToCSV("./data/generated_scans.csv");
     }
 
-    //generates a random ID number for a particular scan, writes the ID and scan to the CSV
     /**
+     * generates a random ID number for a particular scan, writes the ID and scan to the CSV
      * @param amount integer that specifies the amount of scans to be created
      * @param t the start time (minute) of the 10 minute period
      * @param d the integer day
@@ -207,9 +214,11 @@ public class SimulationEngine {
         //System.out.println(amount + " scans added to map\n");
     }
 
-    /** calculates a random number of scans based on the time
+    /** 
+     * calculates a random number of scans based on the time
      * @param t integer time in minutes
      * @param meal integer specifying the meal period (see class constants)
+     * @return expected number of scans for that time
      */
     private int generateScanAmount(int t, int meal){
         int flowRate = 0;
@@ -318,12 +327,17 @@ public class SimulationEngine {
         return -1;
     }
 
-    // Get all simulated data
+    /**
+     * Get all simulated data
+     */
     public Map<Integer, ArrayList<ScanEvent>> getAllScanData() {
         return scansPerDay;
     }
 
-    // Save ALL simulated days to a CSV
+    /**
+     * Save ALL simulated days to a CSV
+     * @param filename filepath to save the CSV at
+     */
     public void saveToCSV(String filename) {
         try {
             FileWriter writer = new FileWriter(filename);
@@ -344,7 +358,10 @@ public class SimulationEngine {
     }
 
 
-    //testing
+    /**
+     * Testing
+     * @param args
+     */
     public static void main(String[] args) {
 
         //testing generating data for the csv
