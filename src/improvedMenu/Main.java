@@ -14,7 +14,7 @@ public class Main {
 
     /**
      * Includes the full simulation and UI.
-     * @param args
+     * @param args unused
      */
     public static void main(String[] args) {
 
