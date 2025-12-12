@@ -1,7 +1,3 @@
-/**
- * @author Uras1717
- */
-
 package improvedMenu;
 
 import java.io.*;
@@ -9,13 +5,15 @@ import java.util.ArrayList;
 
 /** 
  * The MenuParser class is to parse menu.csv and store food items from there in arraylists, provide methods to access them both for all items or just items for one specific meal period.
+ * 
+ * @author Uras1717
  */
 public class MenuParser{ 
     //This array lists all food items from a given csv file
-    private ArrayList<String>fooditems;
+    private ArrayList<String> fooditems;
 
     //This one lists all menu rows as objects MenuRow
-    private ArrayList<MenuRow>rowsstore;
+    private ArrayList<MenuRow> rowsstore;
 
     //MenuRow represents a single row of the csv file, with info day, meal number, and the food item
     private static class MenuRow{ 
