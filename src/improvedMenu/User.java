@@ -2,8 +2,11 @@ package improvedMenu;
 import java.util.*;
 
 /**
+ * This class represents a single user in our simulation.
+ * Each user has a unique ID, list of IDs who are friends and a list of vaorite food items.
+ *
  * @author @ghoney47
- * */
+ */
 
 public class User {
 
@@ -11,14 +14,22 @@ public class User {
     private ArrayList<Integer> friends; //friends id numbers
     private ArrayList<String> favFoods; //strings of favorite foods to be check against the 
 
-    //constructor that only specifies id
+    /**
+     * Constructor that specifies ID only
+     * @param id ID for the user
+     */
     public User(int id) {
         this.id = id;
         friends = new ArrayList<>();
         favFoods = new ArrayList<>();
     }
 
-    //arraylist to intialize all attributes
+    /**
+     * Arraylist initializing all attributes
+     * @param id user ID
+     * @param friends list of friend IDs
+     * @param foods list of favorite food items
+     */
     public User(int id, ArrayList<Integer> friends, ArrayList<String> foods){
         favFoods = foods;
         this.friends = friends;
@@ -71,12 +82,19 @@ public class User {
 
 
     @Override
-    //hashes based on id
+    /**
+     * Hashes based on ID
+     * @return integer hashcode
+     */
     public int hashCode(){
         return Integer.hashCode(id);
     }
 
-    //equality determined by user id
+    /**
+     * Determines equality based on ID
+     * @param o the object to compare to
+     * @return True if IDs match, False otherwise
+     */
     public boolean equals (Object o){
         if (o == this) {return true;}
         if (o == null) {return false;}
@@ -86,7 +104,9 @@ public class User {
         return this.id == u.id;
     }
 
-    //returns string representation of a user
+    /**
+     * @return string representation of a user
+     */
     public String toString(){
         String friends = "";
         String foods = "";
@@ -102,7 +122,10 @@ public class User {
         return "|User " + id + "\n|Foods: " + foods + "\n|Friends: " + friends + "\n|";
     }
 
-    //user testing
+    /**
+     * User testing
+     * @param args
+     */
     public static void main(String[] args) {
        User u1 = new User(0);
        u1.addFavFood("Burger");
